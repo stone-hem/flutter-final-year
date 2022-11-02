@@ -9,7 +9,6 @@ import 'package:get/route_manager.dart';
 
 import 'package:http/http.dart' as http;
 
-
 class Register extends StatefulWidget {
   const Register({super.key});
 
@@ -38,8 +37,7 @@ class _RegisterState extends State<Register> {
       } else {
         errorSnackBar(context, responseMap.values.first[0]);
       }
-    }
-    else{
+    } else {
       errorSnackBar(context, 'email not valid');
     }
   }
@@ -148,7 +146,6 @@ class _RegisterState extends State<Register> {
                     "Register",
                     style: TextStyle(fontSize: 22, color: Color(0xFF363f93)),
                   ),
-      
                   ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xFF363f93),
@@ -163,7 +160,6 @@ class _RegisterState extends State<Register> {
                         size: 30,
                       ),
                       label: Text(''))
-                 
                 ],
               ),
               SizedBox(
@@ -174,8 +170,10 @@ class _RegisterState extends State<Register> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => const Login()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Login()));
                     },
                     child: const Text(
                       "Log In",

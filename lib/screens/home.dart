@@ -1,4 +1,5 @@
 import 'package:finalyear/api/get_client.dart';
+import 'package:finalyear/screens/services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -18,17 +19,15 @@ class _HomeState extends State<Home> {
     final double width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
-      
       body: Container(
-        padding: EdgeInsets.only(left: width*0.1),
-         height: height*1,
-  width: double.infinity,
-  decoration: const BoxDecoration(
-    image: DecorationImage(
-        image: AssetImage("images/catoonbonet.jpeg"),
-        fit: BoxFit.cover),
-  ),
-  child: Column(
+        padding: EdgeInsets.only(left: width * 0.1),
+        height: height * 1,
+        width: double.infinity,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage("images/catoonbonet.jpeg"), fit: BoxFit.cover),
+        ),
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
@@ -45,15 +44,21 @@ class _HomeState extends State<Home> {
             SizedBox(
               height: height * 0.1,
             ),
-            ElevatedButton.icon(
+            Container(
+              decoration: BoxDecoration(
+                
+              ),
+              height: height*0.1,
+              child:  ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF363f93),
                     padding: EdgeInsets.all(20)),
-                onPressed: () async {
-                  var response =
-                      await BaseClient().services("flutter").catchError(() {});
-                  if (response == null) return;
-                  debugPrint("success: ${response.body}");
+                onPressed: () {
+                  // var response =
+                  //     await BaseClient().services("flutter").catchError(() {});
+                  // if (response == null) return;
+                  // debugPrint("success: ${response.body}");
+                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>const Service()));
                 },
                 icon: Icon(
                   Icons.arrow_forward,
@@ -61,6 +66,8 @@ class _HomeState extends State<Home> {
                   size: 30,
                 ),
                 label: Text('Services')),
+            ),
+           
             SizedBox(
               height: height * 0.1,
             ),
@@ -91,7 +98,6 @@ class _HomeState extends State<Home> {
                 label: Text('Technicians')),
           ],
         ),
-      
       ),
     );
   }
