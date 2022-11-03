@@ -1,7 +1,7 @@
 import 'package:finalyear/api/globals.dart';
 import 'package:http/http.dart' as http;
 
-const baseUrl = "http://127.0.0.1:8000/api/";
+// const baseUrl = "http://127.0.0.1:8000/api/";
 
 class BaseClient {
   var client = http.Client();

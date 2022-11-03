@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:finalyear/api/get_client.dart';
+import 'package:finalyear/api/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -14,8 +15,8 @@ class Service extends StatefulWidget {
 }
 
 class _ServiceState extends State<Service> {
-     Map service={};
-    List listOfServices=[];
+  Map service = {};
+  List listOfServices = [];
 
   Future getServices() async {
     http.Response response;
@@ -23,7 +24,7 @@ class _ServiceState extends State<Service> {
     if (response.statusCode == 200) {
       setState(() {
         service = json.decode(response.body);
-        listOfServices=service['services'];
+        listOfServices = service['services'];
       });
     }
   }
@@ -31,38 +32,64 @@ class _ServiceState extends State<Service> {
   @override
   void initState() {
     // TODO: implement initState
-    
+
     getServices();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: service == null
           ? Text("data loading..")
           : SingleChildScrollView(
-            child: Column(
+              padding: EdgeInsets.only(left: width * 0.1, right: width * 0.1),
+              child: Column(
                 children: [
+                   const Text(
+              "Services Offered!",
+              style: TextStyle(fontSize: 26, color: Color(0xFF363f93)),
+            ),
+            const Text(
+              "Get Going!",
+              style: TextStyle(fontSize: 26, color: Color(0xFF363f93)),
+            ),
+            SizedBox(
+              height: height * 0.05,
+            ),
                   ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
-                    return Container(
-                      child: Column(
-                        children: [
-                           Text(listOfServices[index]['name'].toString()),
-                            Text(listOfServices[index]['description'].toString()),
-                            SizedBox(height: 5,)
-                        ],
-                      ),
-                    );
-                  },
-                  itemCount: listOfServices==null? 0:listOfServices.length,
+                      return Container(
+                        padding: EdgeInsets.only(
+                            left: width * 0.01, right: width * 0.01),
+                            margin: EdgeInsets.symmetric(vertical: width*0.01),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Color.fromARGB(255, 173, 173, 189)
+                        ),
+                        child: Column(
+                          children: [
+                            Image.network("http://127.0.0.1:8000/storage/"+listOfServices[index]['picture']),
+                            Text(listOfServices[index]['name'].toString()),
+                            Text(listOfServices[index]['description']
+                                .toString()),
+                            SizedBox(
+                              height: height * 0.05,
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    itemCount:
+                        listOfServices == null ? 0 : listOfServices.length,
                   )
                 ],
               ),
-          ),
+            ),
     );
   }
 }
