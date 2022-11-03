@@ -1,4 +1,5 @@
 import 'package:finalyear/api/get_client.dart';
+import 'package:finalyear/screens/firms.dart';
 import 'package:finalyear/screens/services.dart';
 import 'package:finalyear/screens/technicians.dart';
 import 'package:flutter/cupertino.dart';
@@ -79,7 +80,7 @@ class _HomeState extends State<Home> {
                   color: Colors.white,
                   size: 30,
                 ),
-                label: Text('Firms')),
+                label: Text('Technicians')),
             SizedBox(
               height: height * 0.1,
             ),
@@ -87,13 +88,18 @@ class _HomeState extends State<Home> {
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF363f93),
                     padding: EdgeInsets.all(20)),
-                onPressed: () {},
+                onPressed: () {
+                   Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) =>const Firm()));
+                },
                 icon: Icon(
                   Icons.arrow_forward,
                   color: Colors.white,
                   size: 30,
                 ),
-                label: Text('Technicians')),
+                label: Text('Firms')),
           ],
         ),
       ),
