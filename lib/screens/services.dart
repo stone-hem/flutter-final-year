@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_interpolation_to_compose_strings
+
 import 'dart:convert';
 
 import 'package:finalyear/api/get_client.dart';
@@ -67,13 +69,15 @@ class _ServiceState extends State<Service> {
                         padding: EdgeInsets.only(
                             left: width * 0.01, right: width * 0.01),
                             margin: EdgeInsets.symmetric(vertical: width*0.01),
+                            width: width*0.7,
+                            height: height*0.4 ,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: Color.fromARGB(255, 173, 173, 189)
                         ),
                         child: Column(
                           children: [
-                            Image.network("http://127.0.0.1:8000/storage/"+listOfServices[index]['picture']),
+                            Image.network(imageUrl+listOfServices[index]['picture'], fit: BoxFit.cover,height: height*0.3,),
                             Text(listOfServices[index]['name'].toString()),
                             Text(listOfServices[index]['description']
                                 .toString()),
