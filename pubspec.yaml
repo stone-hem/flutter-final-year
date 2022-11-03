@@ -39,6 +39,7 @@ dependencies:
   get:
   http:
   shared_preferences: 
+  google_fonts:
 
 dev_dependencies:
   flutter_test:

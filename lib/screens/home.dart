@@ -1,5 +1,6 @@
 import 'package:finalyear/api/get_client.dart';
 import 'package:finalyear/screens/services.dart';
+import 'package:finalyear/screens/technicians.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -21,12 +22,6 @@ class _HomeState extends State<Home> {
       backgroundColor: Colors.white,
       body: Container(
         padding: EdgeInsets.only(left: width * 0.1),
-        height: height * 1,
-        width: double.infinity,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage("images/catoonbonet.jpeg"), fit: BoxFit.cover),
-        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -46,28 +41,26 @@ class _HomeState extends State<Home> {
             ),
             Container(
               decoration: BoxDecoration(
-                
+                color: Colors.white,
               ),
-              height: height*0.1,
-              child:  ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF363f93),
-                    padding: EdgeInsets.all(20)),
-                onPressed: () {
-                  // var response =
-                  //     await BaseClient().services("flutter").catchError(() {});
-                  // if (response == null) return;
-                  // debugPrint("success: ${response.body}");
-                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>const Service()));
-                },
-                icon: Icon(
-                  Icons.arrow_forward,
-                  color: Colors.white,
-                  size: 30,
-                ),
-                label: Text('Services')),
+              child: ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF363f93),
+                      padding: EdgeInsets.all(20)),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                const Service()));
+                  },
+                  icon: Icon(
+                    Icons.arrow_forward,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                  label: Text('Services')),
             ),
-           
             SizedBox(
               height: height * 0.1,
             ),
@@ -75,7 +68,12 @@ class _HomeState extends State<Home> {
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF363f93),
                     padding: EdgeInsets.all(20)),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) =>const Technician()));
+                },
                 icon: Icon(
                   Icons.arrow_forward,
                   color: Colors.white,

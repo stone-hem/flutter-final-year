@@ -1,32 +1,32 @@
-// ignore_for_file: prefer_interpolation_to_compose_strings
-
 import 'dart:convert';
 
-import 'package:finalyear/api/globals.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
-class Service extends StatefulWidget {
-  const Service({super.key});
+import '../api/globals.dart';
+
+class Technician extends StatefulWidget {
+  const Technician({super.key});
 
   @override
-  State<Service> createState() => _ServiceState();
+  State<Technician> createState() => _TechnicianState();
 }
 
-class _ServiceState extends State<Service> {
-  Map service = {};
-  List listOfServices = [];
+class _TechnicianState extends State<Technician> {
+   Map technician = {};
+  List listOfTechnicians = [];
 
-  Future getServices() async {
+  Future getTechnicians() async {
     http.Response response;
-    response = await http.get(Uri.parse("${baseUrl}flutter/services"));
+    response = await http.get(Uri.parse("${baseUrl}flutter/technicians"));
     if (response.statusCode == 200) {
       setState(() {
-        service = json.decode(response.body);
-        listOfServices = service['services'];
+        technician = json.decode(response.body);
+        listOfTechnicians = technician['technicians'];
       });
     }
   }
@@ -35,29 +35,26 @@ class _ServiceState extends State<Service> {
   void initState() {
     // TODO: implement initState
 
-    getServices();
+    getTechnicians();
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
-    return Scaffold(
-      body: service == null
+
+     return Scaffold(
+      body: technician == null
           ? Text("data loading..")
           : SingleChildScrollView(
               padding: EdgeInsets.only(left: width * 0.1, right: width * 0.1),
               child: Column(
                 children: [
                   const Text(
-                    "Services Offered!",
+                    "Technicians Available!",
                     style: TextStyle(fontSize: 26, color: Color(0xFF363f93)),
                   ),
-                  const Text(
-                    "Get Going!",
-                    style: TextStyle(fontSize: 26, color: Color(0xFF363f93)),
-                  ),
+                 
                   SizedBox(
                     height: height * 0.05,
                   ),
@@ -77,7 +74,7 @@ class _ServiceState extends State<Service> {
                         child: Column(
                           children: [
                             Image.network(
-                              imageUrl + listOfServices[index]['picture'],
+                              imageUrl + listOfTechnicians[index]['org_pic'],
                               fit: BoxFit.cover,
                               height: height * 0.3,
                               width: width * 0.7,
@@ -85,7 +82,7 @@ class _ServiceState extends State<Service> {
                             Row(
                               children: [
                                 Text(
-                                  "Owner:",
+                                  "Name:",
                                   style: GoogleFonts.lato(
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -93,7 +90,7 @@ class _ServiceState extends State<Service> {
                                   width: width * 0.01,
                                 ),
                                 Text(
-                                  listOfServices[index]['detail_name']
+                                  listOfTechnicians[index]['name']
                                       .toString(),
                                   style: GoogleFonts.lato(
                                       fontWeight: FontWeight.bold),
@@ -103,7 +100,7 @@ class _ServiceState extends State<Service> {
                             Row(
                               children: [
                                 Text(
-                                  "Service:",
+                                  "Contact:",
                                   style: GoogleFonts.lato(
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -111,7 +108,7 @@ class _ServiceState extends State<Service> {
                                   width: width * 0.01,
                                 ),
                                 Text(
-                                  listOfServices[index]['name'].toString(),
+                                  listOfTechnicians[index]['phone_number'].toString(),
                                 ),
                               ],
                             ),
@@ -122,12 +119,11 @@ class _ServiceState extends State<Service> {
                                   style: GoogleFonts.lato(
                                       fontWeight: FontWeight.bold),
                                 ),
-                                 Text(listOfServices[index]['description']
+                                 Text(listOfTechnicians[index]['description']
                                 .toString()),
                               ],
                             ),
-                            SizedBox(height: height*0.01,),
-                           
+                           SizedBox(height: height*0.01,),
                             Row(
                               children: [
                                 ElevatedButton.icon(
@@ -164,7 +160,7 @@ class _ServiceState extends State<Service> {
                       );
                     },
                     itemCount:
-                        listOfServices == null ? 0 : listOfServices.length,
+                        listOfTechnicians == null ? 0 : listOfTechnicians.length,
                   )
                 ],
               ),
