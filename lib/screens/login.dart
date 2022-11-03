@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:finalyear/api/services.dart';
+import 'package:finalyear/screens/home.dart';
 import 'package:finalyear/screens/register.dart';
+import 'package:finalyear/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -26,7 +28,7 @@ class _LoginState extends State<Login> {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (BuildContext context) => Center(child: const Scaffold(body: Text("login successfull"),)),
+              builder: (BuildContext context) => Home(),
             ));
       } else {
         errorSnackBar(context, responseMap.values.first);
@@ -63,7 +65,7 @@ class _LoginState extends State<Login> {
                         color: Color(0xFF363f93),
                       ),
                       onPressed: () {
-                        Get.to(Login());
+                        Get.to(const Splash());
                       },
                     )
                   ],

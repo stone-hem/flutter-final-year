@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:finalyear/screens/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -50,6 +51,28 @@ class _TechnicianState extends State<Technician> {
               padding: EdgeInsets.only(left: width * 0.1, right: width * 0.1),
               child: Column(
                 children: [
+                   SizedBox(
+                    height: height * 0.05,
+                  ),
+                  Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                      icon: const Icon(
+                        Icons.arrow_back_ios,
+                        color: Color(0xFF363f93),
+                      ),
+                      onPressed: () {
+                         Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => const Home()));
+                      },
+                    )
+                  ],
+                ),
                   const Text(
                     "Technicians Available!",
                     style: TextStyle(fontSize: 26, color: Color(0xFF363f93)),

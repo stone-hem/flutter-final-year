@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:finalyear/api/globals.dart';
+import 'package:finalyear/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -50,6 +51,28 @@ class _ServiceState extends State<Service> {
               padding: EdgeInsets.only(left: width * 0.1, right: width * 0.1),
               child: Column(
                 children: [
+                  SizedBox(
+                    height: height * 0.05,
+                  ),
+                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                      icon: const Icon(
+                        Icons.arrow_back_ios,
+                        color: Color(0xFF363f93),
+                      ),
+                      onPressed: () {
+                         Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => const Home()));
+                      },
+                    )
+                  ],
+                ),
                   const Text(
                     "Services Offered!",
                     style: TextStyle(fontSize: 26, color: Color(0xFF363f93)),
@@ -117,17 +140,18 @@ class _ServiceState extends State<Service> {
                             ),
                             Column(
                               children: [
-                                 Text(
+                                Text(
                                   "Description:",
                                   style: GoogleFonts.lato(
                                       fontWeight: FontWeight.bold),
                                 ),
-                                 Text(listOfServices[index]['description']
-                                .toString()),
+                                Text(listOfServices[index]['description']
+                                    .toString()),
                               ],
                             ),
-                            SizedBox(height: height*0.01,),
-                           
+                            SizedBox(
+                              height: height * 0.01,
+                            ),
                             Row(
                               children: [
                                 ElevatedButton.icon(
