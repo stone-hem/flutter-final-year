@@ -20,109 +20,44 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: Colors.white,
       body:  SingleChildScrollView(
-        child: Column(   
-            children: [
-              SizedBox(
+      
+        child: Column(
+          children: [
+             SizedBox(
                 height: height * 0.1,
               ),
               const Text(
                 "Welcome To Home Page!",
                 style: TextStyle(fontSize: 26, color: Color(0xFF363f93)),
               ),
-              const Text(
-                "Continue!",
-                style: TextStyle(fontSize: 26, color: Color(0xFF363f93)),
-              ),
-              SizedBox(
-                height: height * 0.1,
-              ),
-              // Container(
-              //   decoration: BoxDecoration(
-              //     color: Colors.white,
-              //   ),
-              //   child: ElevatedButton.icon(
-              //       style: ElevatedButton.styleFrom(
-              //           backgroundColor: Color(0xFF363f93),
-              //           padding: EdgeInsets.all(20)),
-              //       onPressed: () {
-              //         Navigator.push(
-              //             context,
-              //             MaterialPageRoute(
-              //                 builder: (BuildContext context) =>
-              //                     const Service()));
-              //       },
-              //       icon: Icon(
-              //         Icons.arrow_forward,
-              //         color: Colors.white,
-              //         size: 30,
-              //       ),
-              //       label: Text('Services')),
-              // ),
-              ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                    Container(
-                  width: 100,
-                  height: 300,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white,
-                    image: DecorationImage(image: AssetImage(
-                      'images/lms-units.jpeg'
+             
+           
+              Container(
+
+                height: 200,
+                child: ListView(
+                  
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                      Container(
+                    width: 100,
+                    height: 200,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                      image: DecorationImage(image: AssetImage(
+                        'images/lms-units.jpeg'
+                      ),
+                      fit: BoxFit.cover
+                      )
                     ),
-                    fit: BoxFit.cover
-                    )
                   ),
-                ),
-               
-                ],
-              ),
                  
-             
-              SizedBox(
-                height: height * 0.1,
+                  ],
+                ),
               ),
-             
-              ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF363f93),
-                      padding: EdgeInsets.all(20)),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) =>const Technician()));
-                  },
-                  icon: Icon(
-                    Icons.arrow_forward,
-                    color: Colors.white,
-                    size: 30,
-                  ),
-                  label: Text('Technicians')
-                  ),
-              SizedBox(
-                height: height * 0.1,
-              ),
-              // ElevatedButton.icon(
-              //     style: ElevatedButton.styleFrom(
-              //         backgroundColor: Color(0xFF363f93),
-              //         padding: EdgeInsets.all(20)),
-              //     onPressed: () {
-              //        Navigator.push(
-              //           context,
-              //           MaterialPageRoute(
-              //               builder: (BuildContext context) =>const Firm()));
-              //     },
-              //     icon: Icon(
-              //       Icons.arrow_forward,
-              //       color: Colors.white,
-              //       size: 30,
-              //     ),
-              //     label: Text('Firms')),
-      
-                
-            ],
-          ),
+          ],
+        ),
       ),
      
     );
