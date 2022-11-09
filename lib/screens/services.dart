@@ -54,25 +54,26 @@ class _ServiceState extends State<Service> {
                   SizedBox(
                     height: height * 0.05,
                   ),
-                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(),
-                      icon: const Icon(
-                        Icons.arrow_back_ios,
-                        color: Color(0xFF363f93),
-                      ),
-                      onPressed: () {
-                         Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) => const Home()));
-                      },
-                    )
-                  ],
-                ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(),
+                        icon: const Icon(
+                          Icons.arrow_back_ios,
+                          color: Color(0xFF363f93),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      const Home()));
+                        },
+                      )
+                    ],
+                  ),
                   const Text(
                     "Services Offered!",
                     style: TextStyle(fontSize: 26, color: Color(0xFF363f93)),

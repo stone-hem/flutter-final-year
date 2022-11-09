@@ -18,11 +18,12 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-    var emailController = TextEditingController();
+  var emailController = TextEditingController();
   var passwordController = TextEditingController();
-  _login() async{
-     if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
-      http.Response response = await AuthServices.login(emailController.text, passwordController.text);
+  _login() async {
+    if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
+      http.Response response = await AuthServices.login(
+          emailController.text, passwordController.text);
       Map responseMap = jsonDecode(response.body);
       if (response.statusCode == 200) {
         Navigator.push(
@@ -37,6 +38,7 @@ class _LoginState extends State<Login> {
       errorSnackBar(context, 'enter all required fields');
     }
   }
+
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
@@ -85,8 +87,7 @@ class _LoginState extends State<Login> {
               SizedBox(
                 height: height * 0.1,
               ),
-            
-               TextField(
+              TextField(
                 controller: emailController,
                 style: TextStyle(color: Colors.black),
                 cursorColor: Color(0xFF9b9b9b),
@@ -103,7 +104,7 @@ class _LoginState extends State<Login> {
               SizedBox(
                 height: height * 0.05,
               ),
-               TextField(
+              TextField(
                 controller: passwordController,
                 style: TextStyle(color: Colors.black),
                 cursorColor: Color(0xFF9b9b9b),
@@ -151,8 +152,10 @@ class _LoginState extends State<Login> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => const Register()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Register()));
                     },
                     child: const Text(
                       "Register",

@@ -1,11 +1,9 @@
-import 'package:finalyear/api/get_client.dart';
-import 'package:finalyear/screens/firms.dart';
-import 'package:finalyear/screens/services.dart';
 import 'package:finalyear/screens/technicians.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -21,30 +19,71 @@ class _HomeState extends State<Home> {
     final double width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Container(
-        padding: EdgeInsets.only(left: width * 0.1),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: height * 0.1,
-            ),
-            const Text(
-              "Welcome To Home Page!",
-              style: TextStyle(fontSize: 26, color: Color(0xFF363f93)),
-            ),
-            const Text(
-              "Continue!",
-              style: TextStyle(fontSize: 26, color: Color(0xFF363f93)),
-            ),
-            SizedBox(
-              height: height * 0.1,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
+      body:  SingleChildScrollView(
+        child: Column(   
+            children: [
+              SizedBox(
+                height: height * 0.1,
               ),
-              child: ElevatedButton.icon(
+              const Text(
+                "Welcome To Home Page!",
+                style: TextStyle(fontSize: 26, color: Color(0xFF363f93)),
+              ),
+              const Text(
+                "Continue!",
+                style: TextStyle(fontSize: 26, color: Color(0xFF363f93)),
+              ),
+              SizedBox(
+                height: height * 0.1,
+              ),
+              // Container(
+              //   decoration: BoxDecoration(
+              //     color: Colors.white,
+              //   ),
+              //   child: ElevatedButton.icon(
+              //       style: ElevatedButton.styleFrom(
+              //           backgroundColor: Color(0xFF363f93),
+              //           padding: EdgeInsets.all(20)),
+              //       onPressed: () {
+              //         Navigator.push(
+              //             context,
+              //             MaterialPageRoute(
+              //                 builder: (BuildContext context) =>
+              //                     const Service()));
+              //       },
+              //       icon: Icon(
+              //         Icons.arrow_forward,
+              //         color: Colors.white,
+              //         size: 30,
+              //       ),
+              //       label: Text('Services')),
+              // ),
+              ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                    Container(
+                  width: 100,
+                  height: 300,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.white,
+                    image: DecorationImage(image: AssetImage(
+                      'images/lms-units.jpeg'
+                    ),
+                    fit: BoxFit.cover
+                    )
+                  ),
+                ),
+               
+                ],
+              ),
+                 
+             
+              SizedBox(
+                height: height * 0.1,
+              ),
+             
+              ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xFF363f93),
                       padding: EdgeInsets.all(20)),
@@ -52,57 +91,40 @@ class _HomeState extends State<Home> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                const Service()));
+                            builder: (BuildContext context) =>const Technician()));
                   },
                   icon: Icon(
                     Icons.arrow_forward,
                     color: Colors.white,
                     size: 30,
                   ),
-                  label: Text('Services')),
-            ),
-            SizedBox(
-              height: height * 0.1,
-            ),
-            ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF363f93),
-                    padding: EdgeInsets.all(20)),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) =>const Technician()));
-                },
-                icon: Icon(
-                  Icons.arrow_forward,
-                  color: Colors.white,
-                  size: 30,
-                ),
-                label: Text('Technicians')),
-            SizedBox(
-              height: height * 0.1,
-            ),
-            ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF363f93),
-                    padding: EdgeInsets.all(20)),
-                onPressed: () {
-                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) =>const Firm()));
-                },
-                icon: Icon(
-                  Icons.arrow_forward,
-                  color: Colors.white,
-                  size: 30,
-                ),
-                label: Text('Firms')),
-          ],
-        ),
+                  label: Text('Technicians')
+                  ),
+              SizedBox(
+                height: height * 0.1,
+              ),
+              // ElevatedButton.icon(
+              //     style: ElevatedButton.styleFrom(
+              //         backgroundColor: Color(0xFF363f93),
+              //         padding: EdgeInsets.all(20)),
+              //     onPressed: () {
+              //        Navigator.push(
+              //           context,
+              //           MaterialPageRoute(
+              //               builder: (BuildContext context) =>const Firm()));
+              //     },
+              //     icon: Icon(
+              //       Icons.arrow_forward,
+              //       color: Colors.white,
+              //       size: 30,
+              //     ),
+              //     label: Text('Firms')),
+      
+                
+            ],
+          ),
       ),
+     
     );
   }
 }

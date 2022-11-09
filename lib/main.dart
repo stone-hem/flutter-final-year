@@ -1,6 +1,4 @@
 import 'package:finalyear/screens/home.dart';
-import 'package:finalyear/screens/services.dart';
-import 'package:finalyear/splash.dart';
 import 'package:flutter/material.dart';
 
 void main() {
