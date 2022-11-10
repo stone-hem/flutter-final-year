@@ -1,5 +1,8 @@
+import 'package:finalyear/screens/firms.dart';
+import 'package:finalyear/screens/services.dart';
 import 'package:finalyear/screens/size_constants.dart';
 import 'package:finalyear/screens/styles.dart';
+import 'package:finalyear/screens/technicians.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -111,7 +114,7 @@ class _HomeState extends State<Home> {
               height: 30,
               child: Row(
                 children: [
-                  Text(  
+                  Text(
                     "We Offer!",
                     style: sourceFontBold.copyWith(
                       fontSize: 18,
@@ -128,22 +131,17 @@ class _HomeState extends State<Home> {
               height: 169,
               child: ListView(
                 scrollDirection: Axis.horizontal,
-                 physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  _services(),
-                  _firms(),
-                  _technicians()
-                ],
+                physics: const NeverScrollableScrollPhysics(),
+                children: [_services(), _firms(), _technicians()],
               ),
             ),
-
-             Container(
+            Container(
               padding:
                   const EdgeInsets.symmetric(horizontal: paddingHorizontal),
               height: 30,
               child: Row(
                 children: [
-                  Text(  
+                  Text(
                     "More",
                     style: sourceFontBold.copyWith(
                       fontSize: 18,
@@ -159,7 +157,8 @@ class _HomeState extends State<Home> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: GridView(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2),
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
@@ -167,32 +166,26 @@ class _HomeState extends State<Home> {
                     height: 10,
                     color: Colors.black12,
                   ),
-                   Container(
+                  Container(
                     height: 10,
                     color: Colors.black12,
                   ),
-                     Container(
+                  Container(
                     height: 10,
                     color: Colors.black12,
                   ),
-                   Container(
+                  Container(
                     height: 10,
                     color: Colors.black12,
                   )
                 ],
-                ),
+              ),
             )
-
           ],
         ),
       ),
     );
   }
-
-
-
-
-
 
   //functions to en code
 
@@ -228,7 +221,13 @@ class _HomeState extends State<Home> {
                         backgroundColor: Color(0xFF363f93),
                         // shape: CircleBorder(),
                         padding: EdgeInsets.all(0)),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  const Service()));
+                    },
                     icon: Icon(
                       Icons.arrow_forward,
                       color: Colors.white,
@@ -246,6 +245,7 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+
   _firms() {
     return Container(
       height: 169,
@@ -278,7 +278,12 @@ class _HomeState extends State<Home> {
                         backgroundColor: Color(0xFF363f93),
                         // shape: CircleBorder(),
                         padding: EdgeInsets.all(0)),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => const Firm()));
+                    },
                     icon: Icon(
                       Icons.arrow_forward,
                       color: Colors.white,
@@ -296,6 +301,7 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+
   _technicians() {
     return Container(
       height: 169,
@@ -328,7 +334,13 @@ class _HomeState extends State<Home> {
                         backgroundColor: Color(0xFF363f93),
                         // shape: CircleBorder(),
                         padding: EdgeInsets.all(0)),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  const Technician()));
+                    },
                     icon: Icon(
                       Icons.arrow_forward,
                       color: Colors.white,
@@ -346,6 +358,4 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-
-  
 }
