@@ -1,9 +1,6 @@
-import 'package:finalyear/screens/technicians.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:finalyear/screens/size_constants.dart';
+import 'package:finalyear/screens/styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -15,102 +12,98 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    final double height = MediaQuery.of(context).size.height;
-    final double width = MediaQuery.of(context).size.width;
+    SizeConfig().init(context);
     return Scaffold(
       backgroundColor: Colors.white,
-      body:  SingleChildScrollView(
-      
-        child: Column(
+      body: SafeArea(
+        child: ListView(
           children: [
-             SizedBox(
-                height: height * 0.1,
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: paddingHorizontal),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center, //center content
+                children: [
+                  IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.menu_open_sharp,
+                        color: Color(0xFF363f93),
+                      )),
+                  CircleAvatar(
+                    radius: 20,
+                    backgroundColor: Color.fromARGB(255, 214, 190, 118),
+                    backgroundImage: NetworkImage(
+                        'https://thumbs.dreamstime.com/b/car-mechanic-concept-avatar-vector-illustration-graphic-design-135452405.jpg'),
+                  )
+                ],
               ),
-              const Text(
-                "Welcome To Home Page!",
-                style: TextStyle(fontSize: 26, color: Color(0xFF363f93)),
-              ),
-             
+            ),
+            const SizedBox(
+              height: 20,
+            ),
             SizedBox(
-                height: height * 0.05,
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 30),
-                child:Row(
-                  mainAxisAlignment:  MainAxisAlignment.start,
-                  children: [
-                    Text("Discover")
-                  ],
-                ),
-              ),
+              height: 200,
+              child: Stack(
+                children: [
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0,
+                    child: Image.asset(
+                      'images/top_stack.jpeg',
+                    ),
+                  ),
+                  Positioned(
+                    left: SizeConfig.blockSizeHorizontal!*30,
+                    top: 0,
+                    bottom: SizeConfig.blockSizeVertical!*9,
+                    right: SizeConfig.blockSizeHorizontal!*28,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment:MainAxisAlignment.end,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Hello",
+                              style: sourceFontMedium.copyWith(
+                                fontSize: 18,
+                                color: Color(0xFF363f93),
+                              ),
+                              ),
+                              SizedBox(width: 5,),
+                               Text(
+                              "Stone",
+                              style: sourceFontBold.copyWith(
+                                fontSize: 18,
+                                color: Color(0xFF363f93),
+                              ),
+                              ),
+                          ],
+                        ),
+                        Text(
+                          "Hey there welcome to our application😊",
+                          style: sourceFontRegular.copyWith(
+                            fontSize: 14,
 
-              SizedBox(
-                height: 300,
-                child: ListView(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                      Container(
-                    width: width*0.8,
-                    height: 300,
-                    margin: EdgeInsets.only(right: width*0.05),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.white,
-                      image: DecorationImage(image: AssetImage(
-                        'images/service.jpg'
-                      ),
-                      fit: BoxFit.cover
-                      )
+                          ),
+                          )
+                      ],
                     ),
-                  ),
-                   Container(
-                    width: width*0.8,
-                    height: 200,
-                     margin: EdgeInsets.only(right: width*0.05),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.white,
-                      image: DecorationImage(image: AssetImage(
-                        'images/technician1.jpg'
-                      ),
-                      fit: BoxFit.cover
-                      )
-                    ),
-                  ),
-                   Container(
-                    width: width*0.8,
-                    height: 200,
-                     margin: EdgeInsets.only(right: width*0.05),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.white,
-                      image: DecorationImage(image: AssetImage(
-                        'images/firm1.jpg'
-                      ),
-                      fit: BoxFit.cover
-                      )
-                    ),
-                  ),
-                  ],
-                ),
+                  )
+                ],
               ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: width*0.05),
-                child:Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Explore More"),
-                    Text("see all")
-                  ],
-                ),
             )
-
-
           ],
         ),
       ),
-     
     );
   }
 }
