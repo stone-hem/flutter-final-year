@@ -31,31 +31,82 @@ class _HomeState extends State<Home> {
                 style: TextStyle(fontSize: 26, color: Color(0xFF363f93)),
               ),
              
-           
+            SizedBox(
+                height: height * 0.05,
+              ),
               Container(
+                padding: EdgeInsets.symmetric(horizontal: 30),
+                child:Row(
+                  mainAxisAlignment:  MainAxisAlignment.start,
+                  children: [
+                    Text("Discover")
+                  ],
+                ),
+              ),
 
-                height: 200,
+              SizedBox(
+                height: 300,
                 child: ListView(
-                  
+                  shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   children: [
                       Container(
-                    width: 100,
-                    height: 200,
+                    width: width*0.8,
+                    height: 300,
+                    margin: EdgeInsets.only(right: width*0.05),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.white,
                       image: DecorationImage(image: AssetImage(
-                        'images/lms-units.jpeg'
+                        'images/service.jpg'
                       ),
                       fit: BoxFit.cover
                       )
                     ),
                   ),
-                 
+                   Container(
+                    width: width*0.8,
+                    height: 200,
+                     margin: EdgeInsets.only(right: width*0.05),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                      image: DecorationImage(image: AssetImage(
+                        'images/technician1.jpg'
+                      ),
+                      fit: BoxFit.cover
+                      )
+                    ),
+                  ),
+                   Container(
+                    width: width*0.8,
+                    height: 200,
+                     margin: EdgeInsets.only(right: width*0.05),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                      image: DecorationImage(image: AssetImage(
+                        'images/firm1.jpg'
+                      ),
+                      fit: BoxFit.cover
+                      )
+                    ),
+                  ),
                   ],
                 ),
               ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: width*0.05),
+                child:Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Explore More"),
+                    Text("see all")
+                  ],
+                ),
+            )
+
+
           ],
         ),
       ),
