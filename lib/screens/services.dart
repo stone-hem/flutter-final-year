@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:finalyear/api/globals.dart';
 import 'package:finalyear/screens/home.dart';
+import 'package:finalyear/screens/service_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -87,7 +88,7 @@ class _ServiceState extends State<Service> {
                   ),
                   ListView.builder(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       return Container(
                         padding: EdgeInsets.only(
@@ -95,7 +96,7 @@ class _ServiceState extends State<Service> {
                         margin: EdgeInsets.symmetric(vertical: width * 0.01),
                         width: width * 0.7,
                         height: height * 0.5,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Colors.white,
                         ),
                         child: Column(
@@ -175,7 +176,9 @@ class _ServiceState extends State<Service> {
                                         backgroundColor:
                                             const Color(0xFF363f93),
                                         padding: const EdgeInsets.all(20)),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=> const ServiceDetail()));
+                                    },
                                     icon: const Icon(
                                       Icons.arrow_forward,
                                       color: Colors.white,

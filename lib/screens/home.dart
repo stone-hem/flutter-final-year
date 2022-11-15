@@ -15,7 +15,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String token = '';
-   String username = '';
+  String username = '';
   @override
   void initState() {
     // TODO: implement initState
@@ -45,7 +45,7 @@ class _HomeState extends State<Home> {
             ),
             Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: paddingHorizontal), 
+                  const EdgeInsets.symmetric(horizontal: paddingHorizontal),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center, //center content

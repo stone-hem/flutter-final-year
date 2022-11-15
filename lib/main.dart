@@ -1,3 +1,4 @@
+import 'package:finalyear/screens/service_detail.dart';
 import 'package:finalyear/splash.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const Splash(),
+      home: const ServiceDetail(),
     );
   }
 }
