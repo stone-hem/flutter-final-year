@@ -4,6 +4,7 @@ import 'package:finalyear/screens/size_constants.dart';
 import 'package:finalyear/screens/styles.dart';
 import 'package:finalyear/screens/technicians.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -13,9 +14,27 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  String token = '';
+   String username = '';
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getDetails();
+  }
+
+  void getDetails() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      token = preferences.getString("token")!;
+      username = preferences.getString("username")!;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -26,7 +45,7 @@ class _HomeState extends State<Home> {
             ),
             Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: paddingHorizontal),
+                  const EdgeInsets.symmetric(horizontal: paddingHorizontal), 
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center, //center content
@@ -85,7 +104,7 @@ class _HomeState extends State<Home> {
                               width: 5,
                             ),
                             Text(
-                              "Stone",
+                              "${username}",
                               style: sourceFontBold.copyWith(
                                 fontSize: 18,
                                 color: Color(0xFF363f93),
@@ -131,7 +150,6 @@ class _HomeState extends State<Home> {
               height: 169,
               child: ListView(
                 scrollDirection: Axis.horizontal,
-                physics: const NeverScrollableScrollPhysics(),
                 children: [_services(), _firms(), _technicians()],
               ),
             ),

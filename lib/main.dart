@@ -1,5 +1,7 @@
-import 'package:finalyear/screens/home.dart';
+import 'package:finalyear/splash.dart';
 import 'package:flutter/material.dart';
+
+import 'screens/register.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,11 +14,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Flutter Project',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const Home(),
+      home: const Splash(),
     );
   }
 }
