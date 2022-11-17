@@ -1,48 +1,44 @@
 import 'dart:convert';
 
+import 'package:finalyear/api/globals.dart';
 import 'package:finalyear/api/services.dart';
-import 'package:finalyear/screens/home.dart';
-import 'package:finalyear/screens/register.dart';
+import 'package:finalyear/screens/auth/login.dart';
 import 'package:finalyear/splash.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/route_manager.dart';
+
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
-import '../api/globals.dart';
-
-class Login extends StatefulWidget {
-  const Login({super.key});
+class Register extends StatefulWidget {
+  const Register({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<Register> createState() => _RegisterState();
 }
 
-class _LoginState extends State<Login> {
+class _RegisterState extends State<Register> {
   var emailController = TextEditingController();
+  var nameController = TextEditingController();
   var passwordController = TextEditingController();
-  _login() async {
-    if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
-      http.Response response = await AuthServices.login(
-          emailController.text, passwordController.text);
+  Future _register() async {
+    bool validateEmail = RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(emailController.text);
+    if (validateEmail) {
+      http.Response response = await AuthServices.register(
+          nameController.text, emailController.text, passwordController.text);
       Map responseMap = jsonDecode(response.body);
       if (response.statusCode == 200) {
-        print(responseMap["token"]);
-        SharedPreferences preferences =
-            await SharedPreferences.getInstance();
-        await preferences.setString("token", responseMap["token"]);
-        await preferences.setString("username", responseMap["user"]["name"]);
-        await preferences.setString("email", responseMap["user"]["email"]);
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (BuildContext context) =>Home(),
+              builder: (BuildContext context) => const Login(),
             ));
       } else {
-        errorSnackBar(context, responseMap.values.first);
+        errorSnackBar(context, responseMap.values.first[0]);
       }
     } else {
-      errorSnackBar(context, 'enter all required fields');
+      errorSnackBar(context, 'email not valid');
     }
   }
 
@@ -59,7 +55,7 @@ class _LoginState extends State<Login> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: height * 0.1,
+                height: height * 0.05,
               ),
               Container(
                 padding: const EdgeInsets.only(left: 0, right: 30),
@@ -73,26 +69,41 @@ class _LoginState extends State<Login> {
                         Icons.arrow_back_ios,
                         color: Color(0xFF363f93),
                       ),
-                      onPressed: () {
-                        Get.to(const Splash());
-                      },
+                      onPressed: () => Get.to(Splash()),
                     )
                   ],
                 ),
               ),
               SizedBox(
-                height: height * 0.1,
+                height: height * 0.05,
               ),
               const Text(
-                "Here to get continue",
+                "Here to get welcomed",
                 style: TextStyle(fontSize: 26, color: Color(0xFF363f93)),
               ),
               const Text(
-                "Continue!",
+                "Welcome!",
                 style: TextStyle(fontSize: 26, color: Color(0xFF363f93)),
               ),
               SizedBox(
-                height: height * 0.1,
+                height: height * 0.05,
+              ),
+              TextField(
+                controller: nameController,
+                style: TextStyle(color: Colors.black),
+                cursorColor: Color(0xFF9b9b9b),
+                keyboardType: TextInputType.text,
+                obscureText: false,
+                decoration: InputDecoration(
+                    hintText: 'username',
+                    hintStyle: TextStyle(
+                      color: Color(0xFF9b9b9b),
+                      fontSize: 15,
+                      fontWeight: FontWeight.normal,
+                    )),
+              ),
+              SizedBox(
+                height: height * 0.05,
               ),
               TextField(
                 controller: emailController,
@@ -131,8 +142,8 @@ class _LoginState extends State<Login> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    "Log In",
+                  Text(
+                    "Register",
                     style: TextStyle(fontSize: 22, color: Color(0xFF363f93)),
                   ),
                   ElevatedButton.icon(
@@ -141,7 +152,7 @@ class _LoginState extends State<Login> {
                           shape: CircleBorder(),
                           padding: EdgeInsets.all(20)),
                       onPressed: () {
-                        _login();
+                        _register();
                       },
                       icon: Icon(
                         Icons.arrow_forward,
@@ -162,10 +173,10 @@ class _LoginState extends State<Login> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const Register()));
+                              builder: (context) => const Login()));
                     },
                     child: const Text(
-                      "Register",
+                      "Log In",
                       style: TextStyle(fontSize: 16, color: Color(0xFF363f93)),
                     ),
                   ),

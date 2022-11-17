@@ -1,16 +1,66 @@
+import 'dart:convert';
+
+import 'package:finalyear/api/globals.dart';
+import 'package:finalyear/api/services.dart';
+import 'package:finalyear/screens/home.dart';
 import 'package:finalyear/screens/styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ServiceDetail extends StatefulWidget {
-  const ServiceDetail({super.key});
+  String serviceId;
+  ServiceDetail({super.key, required this.serviceId});
 
   @override
   State<ServiceDetail> createState() => _ServiceDetailState();
 }
 
 class _ServiceDetailState extends State<ServiceDetail> {
+  Map serviceDetail = {};
+  Map serverRes = {};
+  String userId = '';
+
+  Future getServiceDetails() async {
+    http.Response response;
+    response = await http.get(
+        Uri.parse("${baseUrl}flutter/services/create/${widget.serviceId}"));
+    if (response.statusCode == 200) {
+      // print(response.body);
+      setState(() {
+        serviceDetail = json.decode(response.body);
+      });
+    }
+  }
+
+  Future order() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    userId = preferences.getString("id")!;
+    Map data = {
+      "user_id":userId,
+    };
+    var body = json.encode(data);
+    var url = Uri.parse(baseUrl + 'flutter/services/store/${widget.serviceId}');
+    http.Response response = await http.post(
+      url,
+      headers: headers,
+      body: body,
+    );
+
+    if (response.statusCode == 200) {
+      successSnackBar(context, "Order placed successfully");
+    } else {
+      errorSnackBar(context, "${response.statusCode}");
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getServiceDetails();
+  }
+
   int activeStars = 3;
   @override
   Widget build(BuildContext context) {
@@ -28,7 +78,7 @@ class _ServiceDetailState extends State<ServiceDetail> {
                 height: 350,
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage("images/welcome.jpg"),
+                        image: NetworkImage("$imageUrl${serviceDetail["service"]["picture"]}"),
                         fit: BoxFit.cover)),
               ),
             ),
@@ -38,10 +88,16 @@ class _ServiceDetailState extends State<ServiceDetail> {
                 child: Row(
                   children: [
                     IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      const Home()));
+                        },
                         icon: const Icon(
                           Icons.menu_open_sharp,
-                          color: Colors.white,
+                          color: Color(0xFF363f93),
                         )),
                   ],
                 )),
@@ -52,8 +108,8 @@ class _ServiceDetailState extends State<ServiceDetail> {
                   width: MediaQuery.of(context).size.width,
                   height: 500,
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
+                    color: Colors.grey.shade300,
+                    borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(30),
                       topRight: Radius.circular(30),
                     ),
@@ -65,14 +121,14 @@ class _ServiceDetailState extends State<ServiceDetail> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Name",
+                            "${serviceDetail["service"]["name"]}",
                             style: sourceFontBold.copyWith(
                               fontSize: 18,
                               color: Colors.black,
                             ),
                           ),
                           Text(
-                            "\$ 250",
+                            "Ksh. 250",
                             style: sourceFontBold.copyWith(
                               fontSize: 18,
                               color: Colors.black,
@@ -93,7 +149,7 @@ class _ServiceDetailState extends State<ServiceDetail> {
                             width: 10,
                           ),
                           Text(
-                            "Kenya, Nairobi",
+                            "Kenya, ${serviceDetail["service"]["location"]}",
                             style: sourceFontBold.copyWith(
                               fontSize: 14,
                               color: Colors.black,
@@ -110,7 +166,7 @@ class _ServiceDetailState extends State<ServiceDetail> {
                               children: List.generate(5, (index) {
                             return Icon(
                               Icons.star,
-                              color: index < activeStars
+                              color: index < serviceDetail["service"]["rating"]
                                   ? Color(0xFF363f93)
                                   : Colors.grey.shade600,
                             );
@@ -119,7 +175,7 @@ class _ServiceDetailState extends State<ServiceDetail> {
                             width: 10,
                           ),
                           Text(
-                            "${activeStars}.0",
+                            "${serviceDetail["service"]["rating"]}.0",
                             style: sourceFontMedium.copyWith(
                               fontSize: 14,
                               color: Colors.black,
@@ -131,7 +187,7 @@ class _ServiceDetailState extends State<ServiceDetail> {
                         height: 30,
                       ),
                       Text(
-                        "AIA Automobiles",
+                        "${serviceDetail["service"]["firm"]}",
                         style: sourceFontSemiBold.copyWith(
                           fontSize: 16,
                           color: Colors.black,
@@ -141,7 +197,7 @@ class _ServiceDetailState extends State<ServiceDetail> {
                         height: 10,
                       ),
                       Text(
-                        "This is a simple firm that does all the process of making cars from scratch to finality",
+                        "${serviceDetail["service"]["firm_description"]}",
                         style: sourceFontRegular.copyWith(
                           fontSize: 14,
                           color: Colors.black,
@@ -161,7 +217,7 @@ class _ServiceDetailState extends State<ServiceDetail> {
                         height: 10,
                       ),
                       Text(
-                        "This is a simple service that does all the process of making cars from scratch to finality",
+                        "${serviceDetail["service"]["description"]}",
                         style: sourceFontRegular.copyWith(
                           fontSize: 14,
                           color: Colors.black,
@@ -175,10 +231,11 @@ class _ServiceDetailState extends State<ServiceDetail> {
               left: 10,
               child: Row(
                 children: [
-                    ElevatedButton.icon(
+                  ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.grey,
-                          padding: EdgeInsets.symmetric(horizontal:0,vertical: 17)),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 0, vertical: 17)),
                       onPressed: () {},
                       icon: const Icon(
                         Icons.local_activity,
@@ -186,13 +243,17 @@ class _ServiceDetailState extends State<ServiceDetail> {
                         size: 22,
                       ),
                       label: Text('')),
-                      const SizedBox(width: 10,),
-
+                  const SizedBox(
+                    width: 10,
+                  ),
                   ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xFF363f93),
-                          padding: EdgeInsets.symmetric(horizontal:75,vertical: 17)),
-                      onPressed: () {},
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 75, vertical: 17)),
+                      onPressed: () {
+                        order();
+                      },
                       icon: const Icon(
                         Icons.book_online_rounded,
                         color: Colors.white,

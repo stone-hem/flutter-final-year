@@ -1,8 +1,8 @@
-import 'package:finalyear/screens/firms.dart';
-import 'package:finalyear/screens/services.dart';
+import 'package:finalyear/screens/firms/firms.dart';
+import 'package:finalyear/screens/services/services.dart';
 import 'package:finalyear/screens/size_constants.dart';
 import 'package:finalyear/screens/styles.dart';
-import 'package:finalyear/screens/technicians.dart';
+import 'package:finalyear/screens/technicians/technicians.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,6 +16,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   String token = '';
   String username = '';
+  String userId = '';
   @override
   void initState() {
     // TODO: implement initState
@@ -28,6 +29,7 @@ class _HomeState extends State<Home> {
     setState(() {
       token = preferences.getString("token")!;
       username = preferences.getString("username")!;
+      userId = preferences.getString("id")!;
     });
   }
 
@@ -59,8 +61,7 @@ class _HomeState extends State<Home> {
                   CircleAvatar(
                     radius: 20,
                     backgroundColor: Color.fromARGB(255, 214, 190, 118),
-                    backgroundImage: NetworkImage(
-                        'https://thumbs.dreamstime.com/b/car-mechanic-concept-avatar-vector-illustration-graphic-design-135452405.jpg'),
+                    backgroundImage: AssetImage('images/sngmechanic.png'),
                   )
                 ],
               ),
@@ -97,14 +98,14 @@ class _HomeState extends State<Home> {
                               "Hello",
                               style: sourceFontMedium.copyWith(
                                 fontSize: 18,
-                                color: Color(0xFF363f93),
+                                color: const Color(0xFF363f93),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
                             Text(
-                              "${username}",
+                              username,
                               style: sourceFontBold.copyWith(
                                 fontSize: 18,
                                 color: Color(0xFF363f93),
@@ -269,7 +270,7 @@ class _HomeState extends State<Home> {
       height: 169,
       width: 150,
       padding: EdgeInsets.all(5),
-      margin: EdgeInsets.only(left: 30),
+      margin: EdgeInsets.only(left: 15),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20), color: Colors.grey.shade300),
       child: Column(
@@ -325,7 +326,7 @@ class _HomeState extends State<Home> {
       height: 169,
       width: 150,
       padding: EdgeInsets.all(5),
-      margin: EdgeInsets.only(left: 30),
+      margin: EdgeInsets.only(left: 15,right: 30),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20), color: Colors.grey.shade300),
       child: Column(

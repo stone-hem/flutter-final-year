@@ -1,4 +1,4 @@
-import 'package:finalyear/screens/register.dart';
+import 'package:finalyear/screens/auth/register.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 

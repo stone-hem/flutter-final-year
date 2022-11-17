@@ -1,34 +1,33 @@
-// ignore_for_file: prefer_interpolation_to_compose_strings
-
 import 'dart:convert';
 
-import 'package:finalyear/api/globals.dart';
 import 'package:finalyear/screens/home.dart';
-import 'package:finalyear/screens/service_detail.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
-class Service extends StatefulWidget {
-  const Service({super.key});
+import '../../api/globals.dart';
+
+class Technician extends StatefulWidget {
+  const Technician({super.key});
 
   @override
-  State<Service> createState() => _ServiceState();
+  State<Technician> createState() => _TechnicianState();
 }
 
-class _ServiceState extends State<Service> {
-  Map service = {};
-  List listOfServices = [];
+class _TechnicianState extends State<Technician> {
+   Map technician = {};
+  List listOfTechnicians = [];
 
-  Future getServices() async {
+  Future getTechnicians() async {
     http.Response response;
-    response = await http.get(Uri.parse("${baseUrl}flutter/services"));
+    response = await http.get(Uri.parse("${baseUrl}flutter/technicians"));
     if (response.statusCode == 200) {
       setState(() {
-        service = json.decode(response.body);
-        listOfServices = service['services'];
+        technician = json.decode(response.body);
+        listOfTechnicians = technician['technicians'];
       });
     }
   }
@@ -37,52 +36,48 @@ class _ServiceState extends State<Service> {
   void initState() {
     // TODO: implement initState
 
-    getServices();
+    getTechnicians();
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
-    return Scaffold(
-      body: service == null
+
+     return Scaffold(
+      body: technician == null
           ? Text("data loading..")
           : SingleChildScrollView(
               padding: EdgeInsets.only(left: width * 0.1, right: width * 0.1),
               child: Column(
                 children: [
-                  SizedBox(
+                   SizedBox(
                     height: height * 0.05,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        padding: EdgeInsets.zero,
-                        constraints: const BoxConstraints(),
-                        icon: const Icon(
-                          Icons.arrow_back_ios,
-                          color: Color(0xFF363f93),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      const Home()));
-                        },
-                      )
-                    ],
-                  ),
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                      icon: const Icon(
+                        Icons.arrow_back_ios,
+                        color: Color(0xFF363f93),
+                      ),
+                      onPressed: () {
+                         Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => const Home()));
+                      },
+                    )
+                  ],
+                ),
                   const Text(
-                    "Services Offered!",
+                    "Technicians Available!",
                     style: TextStyle(fontSize: 26, color: Color(0xFF363f93)),
                   ),
-                  const Text(
-                    "Get Going!",
-                    style: TextStyle(fontSize: 26, color: Color(0xFF363f93)),
-                  ),
+                 
                   SizedBox(
                     height: height * 0.05,
                   ),
@@ -96,13 +91,13 @@ class _ServiceState extends State<Service> {
                         margin: EdgeInsets.symmetric(vertical: width * 0.01),
                         width: width * 0.7,
                         height: height * 0.5,
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           color: Colors.white,
                         ),
                         child: Column(
                           children: [
                             Image.network(
-                              imageUrl + listOfServices[index]['picture'],
+                              imageUrl + listOfTechnicians[index]['org_pic'],
                               fit: BoxFit.cover,
                               height: height * 0.3,
                               width: width * 0.7,
@@ -110,7 +105,7 @@ class _ServiceState extends State<Service> {
                             Row(
                               children: [
                                 Text(
-                                  "Owner:",
+                                  "Name:",
                                   style: GoogleFonts.lato(
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -118,7 +113,7 @@ class _ServiceState extends State<Service> {
                                   width: width * 0.01,
                                 ),
                                 Text(
-                                  listOfServices[index]['detail_name']
+                                  listOfTechnicians[index]['name']
                                       .toString(),
                                   style: GoogleFonts.lato(
                                       fontWeight: FontWeight.bold),
@@ -128,7 +123,7 @@ class _ServiceState extends State<Service> {
                             Row(
                               children: [
                                 Text(
-                                  "Service:",
+                                  "Contact:",
                                   style: GoogleFonts.lato(
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -136,24 +131,22 @@ class _ServiceState extends State<Service> {
                                   width: width * 0.01,
                                 ),
                                 Text(
-                                  listOfServices[index]['name'].toString(),
+                                  listOfTechnicians[index]['phone_number'].toString(),
                                 ),
                               ],
                             ),
                             Column(
                               children: [
-                                Text(
+                                 Text(
                                   "Description:",
                                   style: GoogleFonts.lato(
                                       fontWeight: FontWeight.bold),
                                 ),
-                                Text(listOfServices[index]['description']
-                                    .toString()),
+                                 Text(listOfTechnicians[index]['description']
+                                .toString()),
                               ],
                             ),
-                            SizedBox(
-                              height: height * 0.01,
-                            ),
+                           SizedBox(height: height*0.01,),
                             Row(
                               children: [
                                 ElevatedButton.icon(
@@ -176,9 +169,7 @@ class _ServiceState extends State<Service> {
                                         backgroundColor:
                                             const Color(0xFF363f93),
                                         padding: const EdgeInsets.all(20)),
-                                    onPressed: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=> const ServiceDetail()));
-                                    },
+                                    onPressed: () {},
                                     icon: const Icon(
                                       Icons.arrow_forward,
                                       color: Colors.white,
@@ -192,7 +183,7 @@ class _ServiceState extends State<Service> {
                       );
                     },
                     itemCount:
-                        listOfServices == null ? 0 : listOfServices.length,
+                        listOfTechnicians == null ? 0 : listOfTechnicians.length,
                   )
                 ],
               ),

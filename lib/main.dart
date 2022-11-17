@@ -1,8 +1,6 @@
-import 'package:finalyear/screens/service_detail.dart';
 import 'package:finalyear/splash.dart';
 import 'package:flutter/material.dart';
 
-import 'screens/register.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const ServiceDetail(),
+      home:const  Splash(),
     );
   }
 }

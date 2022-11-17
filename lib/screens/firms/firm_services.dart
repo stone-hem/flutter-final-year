@@ -1,33 +1,31 @@
 import 'dart:convert';
 
+import 'package:finalyear/api/globals.dart';
 import 'package:finalyear/screens/home.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:google_fonts/google_fonts.dart';
 
-import '../api/globals.dart';
-
-class Technician extends StatefulWidget {
-  const Technician({super.key});
+class FirmServices extends StatefulWidget {
+  String firmId = '';
+  FirmServices({super.key, required this.firmId});
 
   @override
-  State<Technician> createState() => _TechnicianState();
+  State<FirmServices> createState() => _FirmServicesState();
 }
 
-class _TechnicianState extends State<Technician> {
-   Map technician = {};
-  List listOfTechnicians = [];
+class _FirmServicesState extends State<FirmServices> {
+  Map firmServices = {};
+  List listOfFirmServices = [];
 
-  Future getTechnicians() async {
+  Future getFirmServices() async {
     http.Response response;
-    response = await http.get(Uri.parse("${baseUrl}flutter/technicians"));
+    response = await http
+        .get(Uri.parse("${baseUrl}flutter/firms/services/${widget.firmId}"));
     if (response.statusCode == 200) {
       setState(() {
-        technician = json.decode(response.body);
-        listOfTechnicians = technician['technicians'];
+        firmServices = json.decode(response.body);
+        listOfFirmServices = firmServices['firm'];
       });
     }
   }
@@ -35,49 +33,48 @@ class _TechnicianState extends State<Technician> {
   @override
   void initState() {
     // TODO: implement initState
-
-    getTechnicians();
     super.initState();
+    getFirmServices();
   }
+
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
-
-     return Scaffold(
-      body: technician == null
+    return Scaffold(
+      body: firmServices == null
           ? Text("data loading..")
           : SingleChildScrollView(
               padding: EdgeInsets.only(left: width * 0.1, right: width * 0.1),
               child: Column(
                 children: [
-                   SizedBox(
+                  SizedBox(
                     height: height * 0.05,
                   ),
                   Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(),
-                      icon: const Icon(
-                        Icons.arrow_back_ios,
-                        color: Color(0xFF363f93),
-                      ),
-                      onPressed: () {
-                         Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) => const Home()));
-                      },
-                    )
-                  ],
-                ),
-                  const Text(
-                    "Technicians Available!",
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(),
+                        icon: const Icon(
+                          Icons.arrow_back_ios,
+                          color: Color(0xFF363f93),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      const Home()));
+                        },
+                      )
+                    ],
+                  ),
+                   Text(
+                    "${firmServices['firm_name']} ",
                     style: TextStyle(fontSize: 26, color: Color(0xFF363f93)),
                   ),
-                 
                   SizedBox(
                     height: height * 0.05,
                   ),
@@ -97,7 +94,7 @@ class _TechnicianState extends State<Technician> {
                         child: Column(
                           children: [
                             Image.network(
-                              imageUrl + listOfTechnicians[index]['org_pic'],
+                              imageUrl + listOfFirmServices[index]['picture'],
                               fit: BoxFit.cover,
                               height: height * 0.3,
                               width: width * 0.7,
@@ -113,8 +110,7 @@ class _TechnicianState extends State<Technician> {
                                   width: width * 0.01,
                                 ),
                                 Text(
-                                  listOfTechnicians[index]['name']
-                                      .toString(),
+                                  listOfFirmServices[index]['name'].toString(),
                                   style: GoogleFonts.lato(
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -131,22 +127,25 @@ class _TechnicianState extends State<Technician> {
                                   width: width * 0.01,
                                 ),
                                 Text(
-                                  listOfTechnicians[index]['phone_number'].toString(),
+                                  listOfFirmServices[index]['phone_number']
+                                      .toString(),
                                 ),
                               ],
                             ),
                             Column(
                               children: [
-                                 Text(
+                                Text(
                                   "Description:",
                                   style: GoogleFonts.lato(
                                       fontWeight: FontWeight.bold),
                                 ),
-                                 Text(listOfTechnicians[index]['description']
-                                .toString()),
+                                Text(listOfFirmServices[index]['description']
+                                    .toString()),
                               ],
                             ),
-                           SizedBox(height: height*0.01,),
+                            SizedBox(
+                              height: height * 0.01,
+                            ),
                             Row(
                               children: [
                                 ElevatedButton.icon(
@@ -182,8 +181,9 @@ class _TechnicianState extends State<Technician> {
                         ),
                       );
                     },
-                    itemCount:
-                        listOfTechnicians == null ? 0 : listOfTechnicians.length,
+                    itemCount: listOfFirmServices == null
+                        ? 0
+                        : listOfFirmServices.length,
                   )
                 ],
               ),
