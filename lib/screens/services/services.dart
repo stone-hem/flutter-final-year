@@ -8,6 +8,7 @@ import 'package:finalyear/screens/services/service_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Service extends StatefulWidget {
   const Service({super.key});
@@ -19,6 +20,7 @@ class Service extends StatefulWidget {
 class _ServiceState extends State<Service> {
   Map service = {};
   List listOfServices = [];
+  String userId = '';
 
   Future getServices() async {
     http.Response response;
@@ -31,11 +33,23 @@ class _ServiceState extends State<Service> {
     }
   }
 
+  Future orderService(String id) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    userId = preferences.getString("id")!;
+    Map data = {"user_id": userId};
+    var body = json.encode(data);
+    var url = Uri.parse(baseUrl + 'flutter/services/store/${id}');
+    http.Response response = await http.post(url, headers: headers, body: body);
+    if (response.statusCode == 200) {
+      successSnackBar(context, "Order placed successfully");
+    } else {
+      errorSnackBar(context, "An error occurred while placing the order");
+    }
+  }
 
   @override
   void initState() {
     // TODO: implement initState
-
     getServices();
     super.initState();
   }
@@ -46,7 +60,9 @@ class _ServiceState extends State<Service> {
     final double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: service == null
-          ? Container(child: Center(child: Text("data loading..")),)
+          ? Container(
+              child: Center(child: Text("data loading..")),
+            )
           : SingleChildScrollView(
               padding: EdgeInsets.only(left: width * 0.1, right: width * 0.1),
               child: Column(
@@ -160,7 +176,10 @@ class _ServiceState extends State<Service> {
                                         backgroundColor:
                                             const Color(0xFF363f93),
                                         padding: const EdgeInsets.all(20)),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      orderService(listOfServices[index]['id']
+                                          .toString());
+                                    },
                                     icon: const Icon(
                                       Icons.arrow_forward,
                                       color: Colors.white,
@@ -180,7 +199,12 @@ class _ServiceState extends State<Service> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (BuildContext context) =>
-                                                   ServiceDetail(serviceId: listOfServices[index]['id'].toString(),)));
+                                                  ServiceDetail(
+                                                    serviceId:
+                                                        listOfServices[index]
+                                                                ['id']
+                                                            .toString(),
+                                                  )));
                                     },
                                     icon: const Icon(
                                       Icons.arrow_forward,

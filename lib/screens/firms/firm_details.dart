@@ -1,56 +1,31 @@
 import 'dart:convert';
 
 import 'package:finalyear/api/globals.dart';
-import 'package:finalyear/api/services.dart';
 import 'package:finalyear/screens/home.dart';
 import 'package:finalyear/screens/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
-class ServiceDetail extends StatefulWidget {
-  String serviceId;
-  ServiceDetail({super.key, required this.serviceId});
+class FirmDetail extends StatefulWidget {
+  String firmId;
+  FirmDetail({super.key, required this.firmId});
 
   @override
-  State<ServiceDetail> createState() => _ServiceDetailState();
+  State<FirmDetail> createState() => _FirmDetailState();
 }
 
-class _ServiceDetailState extends State<ServiceDetail> {
-  Map serviceDetail = {};
-  Map serverRes = {};
-  String userId = '';
+class _FirmDetailState extends State<FirmDetail> {
+  Map firmDetails = {};
 
-  Future getServiceDetails() async {
+  Future getFirmDetails() async {
     http.Response response;
-    response = await http.get(
-        Uri.parse("${baseUrl}flutter/services/create/${widget.serviceId}"));
+    response =
+        await http.get(Uri.parse("${baseUrl}flutter/firms/${widget.firmId}"));
     if (response.statusCode == 200) {
       // print(response.body);
       setState(() {
-        serviceDetail = json.decode(response.body);
+        firmDetails = json.decode(response.body);
       });
-    }
-  }
-
-  Future order() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    userId = preferences.getString("id")!;
-    Map data = {
-      "user_id": userId,
-    };
-    var body = json.encode(data);
-    var url = Uri.parse(baseUrl + 'flutter/services/store/${widget.serviceId}');
-    http.Response response = await http.post(
-      url,
-      headers: headers,
-      body: body,
-    );
-
-    if (response.statusCode == 200) {
-      successSnackBar(context, "Order placed successfully");
-    } else {
-      errorSnackBar(context, "${response.statusCode}");
     }
   }
 
@@ -58,10 +33,9 @@ class _ServiceDetailState extends State<ServiceDetail> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getServiceDetails();
+    getFirmDetails();
   }
 
-  int activeStars = 3;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,7 +53,7 @@ class _ServiceDetailState extends State<ServiceDetail> {
                 decoration: BoxDecoration(
                     image: DecorationImage(
                         image: NetworkImage(
-                            "$imageUrl${serviceDetail["service"]["picture"]}"),
+                            "$imageUrl${firmDetails["firm"]["org_pic"]}"),
                         fit: BoxFit.cover)),
               ),
             ),
@@ -122,14 +96,14 @@ class _ServiceDetailState extends State<ServiceDetail> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "${serviceDetail["service"]["name"]}",
+                            "${firmDetails["firm"]["name"]}",
                             style: sourceFontBold.copyWith(
                               fontSize: 18,
                               color: Colors.black,
                             ),
                           ),
                           Text(
-                            "Ksh. ${serviceDetail["service"]["value"]}",
+                            "Contact ${firmDetails["firm"]["phone_number"]}",
                             style: sourceFontBold.copyWith(
                               fontSize: 18,
                               color: Colors.black,
@@ -150,7 +124,7 @@ class _ServiceDetailState extends State<ServiceDetail> {
                             width: 10,
                           ),
                           Text(
-                            "Kenya, ${serviceDetail["service"]["location"]}",
+                            "Kenya, ${firmDetails["firm"]["location"]}",
                             style: sourceFontBold.copyWith(
                               fontSize: 14,
                               color: Colors.black,
@@ -167,7 +141,7 @@ class _ServiceDetailState extends State<ServiceDetail> {
                               children: List.generate(5, (index) {
                             return Icon(
                               Icons.star,
-                              color: index < serviceDetail["service"]["rating"]
+                              color: index < 4
                                   ? Color(0xFF363f93)
                                   : Colors.grey.shade600,
                             );
@@ -176,7 +150,7 @@ class _ServiceDetailState extends State<ServiceDetail> {
                             width: 10,
                           ),
                           Text(
-                            "${serviceDetail["service"]["rating"]}.0",
+                            "${firmDetails["firm"]["rating"]}.0",
                             style: sourceFontMedium.copyWith(
                               fontSize: 14,
                               color: Colors.black,
@@ -188,7 +162,7 @@ class _ServiceDetailState extends State<ServiceDetail> {
                         height: 30,
                       ),
                       Text(
-                        "${serviceDetail["service"]["firm"]}",
+                        "${firmDetails["firm"]["owner"]}",
                         style: sourceFontSemiBold.copyWith(
                           fontSize: 16,
                           color: Colors.black,
@@ -198,7 +172,7 @@ class _ServiceDetailState extends State<ServiceDetail> {
                         height: 10,
                       ),
                       Text(
-                        "${serviceDetail["service"]["firm_description"]}",
+                        "${firmDetails["firm"]["description"]}",
                         style: sourceFontRegular.copyWith(
                           fontSize: 14,
                           color: Colors.black,
@@ -208,7 +182,7 @@ class _ServiceDetailState extends State<ServiceDetail> {
                         height: 20,
                       ),
                       Text(
-                        "Service Description",
+                        "Firm Description",
                         style: sourceFontBold.copyWith(
                           fontSize: 18,
                           color: Colors.black,
@@ -218,7 +192,7 @@ class _ServiceDetailState extends State<ServiceDetail> {
                         height: 10,
                       ),
                       Text(
-                        "${serviceDetail["service"]["description"]}",
+                        "${firmDetails["firm"]["description"]}",
                         style: sourceFontRegular.copyWith(
                           fontSize: 14,
                           color: Colors.black,
@@ -227,43 +201,6 @@ class _ServiceDetailState extends State<ServiceDetail> {
                     ],
                   ),
                 )),
-            Positioned(
-              bottom: 10,
-              left: 10,
-              child: Row(
-                children: [
-                  ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.grey,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 0, vertical: 17)),
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.local_activity,
-                        color: Colors.white,
-                        size: 22,
-                      ),
-                      label: Text('')),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFF363f93),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 75, vertical: 17)),
-                      onPressed: () {
-                        order();
-                      },
-                      icon: const Icon(
-                        Icons.book_online_rounded,
-                        color: Colors.white,
-                        size: 22,
-                      ),
-                      label: Text('Order Service')),
-                ],
-              ),
-            )
           ],
         ),
       ),

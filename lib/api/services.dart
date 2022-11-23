@@ -28,7 +28,7 @@ class AuthServices {
       "password": password,
     };
     var body = json.encode(data);
-    var url = Uri.parse(baseUrl + 'login');
+    var url = Uri.parse('${baseUrl}login');
     http.Response response = await http.post(
       url,
       headers: headers,

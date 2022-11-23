@@ -1,11 +1,13 @@
 import 'dart:convert';
 
+import 'package:finalyear/screens/firms/firm_details.dart';
 import 'package:finalyear/screens/firms/firm_services.dart';
 import 'package:finalyear/screens/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
@@ -24,7 +26,9 @@ class _FirmState extends State<Firm> {
 
   Future getFirms() async {
     http.Response response;
-    response = await http.get(Uri.parse("${baseUrl}flutter/firms"));
+    response = await http.get(Uri.parse(
+      "${baseUrl}flutter/firms",
+    ));
     if (response.statusCode == 200) {
       setState(() {
         firm = json.decode(response.body);
@@ -162,7 +166,10 @@ class _FirmState extends State<Firm> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (BuildContext context) =>
-                                                  FirmServices(firmId: listOfFirms[index]['id'].toString())));
+                                                  FirmServices(
+                                                      firmId: listOfFirms[index]
+                                                              ['id']
+                                                          .toString())));
                                     },
                                     icon: const Icon(
                                       Icons.arrow_forward,
@@ -170,13 +177,21 @@ class _FirmState extends State<Firm> {
                                       size: 10,
                                     ),
                                     label: const Text('Our Services')),
-                               
                                 ElevatedButton.icon(
                                     style: ElevatedButton.styleFrom(
                                         backgroundColor:
                                             const Color(0xFF363f93),
                                         padding: const EdgeInsets.all(20)),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  FirmDetail(
+                                                      firmId: listOfFirms[index]
+                                                              ['id']
+                                                          .toString())));
+                                    },
                                     icon: const Icon(
                                       Icons.arrow_forward,
                                       color: Colors.white,

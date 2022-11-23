@@ -71,7 +71,7 @@ class _FirmServicesState extends State<FirmServices> {
                       )
                     ],
                   ),
-                   Text(
+                  Text(
                     "${firmServices['firm_name']} ",
                     style: TextStyle(fontSize: 26, color: Color(0xFF363f93)),
                   ),

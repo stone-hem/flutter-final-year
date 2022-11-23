@@ -173,35 +173,80 @@ class _HomeState extends State<Home> {
             const SizedBox(
               height: 10,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: GridView(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2),
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  Container(
-                    height: 10,
-                    color: Colors.black12,
-                  ),
-                  Container(
-                    height: 10,
-                    color: Colors.black12,
-                  ),
-                  Container(
-                    height: 10,
-                    color: Colors.black12,
-                  ),
-                  Container(
-                    height: 10,
-                    color: Colors.black12,
-                  )
-                ],
-              ),
+          SizedBox(
+            height: 70,
+           child:ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                   Container(
+                   margin: EdgeInsets.only(left: 30),
+                    width: 100,
+                   child: ElevatedButton.icon(
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            const Color(0xFF363f93),
+                                        padding: const EdgeInsets.all(20)),
+                                    onPressed: () {
+                                      
+                                    },
+                                    icon: const Icon(
+                                      Icons.arrow_forward,
+                                      color: Colors.white,
+                                      size: 0,
+                                    ),
+                                    label: const Text('My Services',style: TextStyle(
+                                      fontSize: 10
+                                    ),)),              
+                   ),
+
+                    Container(
+                         margin: EdgeInsets.only(left: 15),
+                    width: 100,
+                   child: ElevatedButton.icon(
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            const Color(0xFF363f93),
+                                        padding: const EdgeInsets.all(20)),
+                                    onPressed: () {
+                                      
+                                    },
+                                    icon: const Icon(
+                                      Icons.arrow_forward,
+                                      color: Colors.white,
+                                      size: 0,
+                                    ),
+                                    label: const Text('Pending Services',style: TextStyle(
+                                      fontSize: 10
+                                    ),)),      
+                   ),
+                    Container(
+                     margin: EdgeInsets.only(left: 15),
+                    width: 100,
+                   child: ElevatedButton.icon(
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            const Color(0xFF363f93),
+                                        padding: const EdgeInsets.all(20)),
+                                    onPressed: () {
+                                      
+                                    },
+                                    icon: const Icon(
+                                      Icons.arrow_forward,
+                                      color: Colors.white,
+                                      size: 0,
+                                    ),
+                                    label: const Text('Done Services',style: TextStyle(
+                                      fontSize: 10
+                                    ),)),      
+                   ),
+                   
+                  ],
+                )
+          ),
+               
+              ],
             )
-          ],
-        ),
+         
       ),
     );
   }
@@ -221,11 +266,11 @@ class _HomeState extends State<Home> {
           ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: Image.asset(
-              "images/service.jpg",
+              "images/service1.jpg",
               fit: BoxFit.cover,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Row(
@@ -278,11 +323,11 @@ class _HomeState extends State<Home> {
           ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: Image.asset(
-              "images/firm1.jpg",
+              "images/firm2.jpg",
               fit: BoxFit.cover,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Row(
@@ -291,24 +336,24 @@ class _HomeState extends State<Home> {
                 height: 25,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
-                    color: Color(0xFF363f93)),
+                    color: const Color(0xFF363f93)),
                 child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF363f93),
+                        backgroundColor: const Color(0xFF363f93),
                         // shape: CircleBorder(),
-                        padding: EdgeInsets.all(0)),
+                        padding: const EdgeInsets.all(0)),
                     onPressed: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (BuildContext context) => const Firm()));
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.arrow_forward,
                       color: Colors.white,
                       size: 15,
                     ),
-                    label: Text('Firms')),
+                    label: const Text('Firms')),
               )
             ],
           ),
@@ -334,7 +379,7 @@ class _HomeState extends State<Home> {
           ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: Image.asset(
-              "images/firm1.jpg",
+              "images/tech.jpg",
               fit: BoxFit.cover,
             ),
           ),
