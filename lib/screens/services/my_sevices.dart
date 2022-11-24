@@ -42,10 +42,8 @@ class _MyServiceState extends State<MyService> {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: services == null
-          ? Container(
-              child: Center(child: Text("data loading..")),
-            )
+      body: services['cart'] == null
+          ? const Center(child: Text("data loading.."))
           : SingleChildScrollView(
               padding: EdgeInsets.only(left: width * 0.1, right: width * 0.1),
               child: Column(

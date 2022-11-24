@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:finalyear/api/globals.dart';
 import 'package:finalyear/screens/home.dart';
+import 'package:finalyear/screens/services/service_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FirmServices extends StatefulWidget {
   final String firmId;
@@ -17,6 +19,7 @@ class FirmServices extends StatefulWidget {
 class _FirmServicesState extends State<FirmServices> {
   Map firmServices = {};
   List listOfFirmServices = [];
+  String? userId;
 
   Future getFirmServices() async {
     http.Response response;
@@ -27,6 +30,20 @@ class _FirmServicesState extends State<FirmServices> {
         firmServices = json.decode(response.body);
         listOfFirmServices = firmServices['firm'];
       });
+    }
+  }
+
+  Future orderService(String id) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    userId = preferences.getString("id");
+    Map data = {"user_id": userId};
+    var body = json.encode(data);
+    var url = Uri.parse('${baseUrl}flutter/services/store/$id');
+    http.Response response = await http.post(url, headers: headers, body: body);
+    if (response.statusCode == 200) {
+      successSnackBar((context), "Order placed successfully");
+    } else {
+      errorSnackBar((context), "An error occurred while placing the order");
     }
   }
 
@@ -42,8 +59,8 @@ class _FirmServicesState extends State<FirmServices> {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: firmServices == null
-          ? Text("data loading..")
+      body: firmServices['firm'] == null
+          ? const Center(child: Text("data loading.."))
           : SingleChildScrollView(
               padding: EdgeInsets.only(left: width * 0.1, right: width * 0.1),
               child: Column(
@@ -80,7 +97,7 @@ class _FirmServicesState extends State<FirmServices> {
                   ),
                   ListView.builder(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       return Container(
                         padding: EdgeInsets.only(
@@ -153,7 +170,11 @@ class _FirmServicesState extends State<FirmServices> {
                                         backgroundColor:
                                             const Color(0xFF363f93),
                                         padding: const EdgeInsets.all(17)),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      orderService(listOfFirmServices[index]
+                                              ['id']
+                                          .toString());
+                                    },
                                     icon: const Icon(
                                       Icons.arrow_forward,
                                       color: Colors.white,
@@ -168,7 +189,16 @@ class _FirmServicesState extends State<FirmServices> {
                                         backgroundColor:
                                             const Color(0xFF363f93),
                                         padding: const EdgeInsets.all(17)),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  ServiceDetail(
+                                                      serviceId: listOfFirmServices[index]
+                                              ['id']
+                                          .toString())));
+                                    },
                                     icon: const Icon(
                                       Icons.arrow_forward,
                                       color: Colors.white,

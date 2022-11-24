@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:finalyear/api/globals.dart';
 import 'package:finalyear/screens/home.dart';
+import 'package:finalyear/screens/services/service_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TechnicianServices extends StatefulWidget {
   final String technicianId;
@@ -17,6 +19,7 @@ class TechnicianServices extends StatefulWidget {
 class _TechnicianServicesState extends State<TechnicianServices> {
   Map technicianServices = {};
   List listOfTechnicianServices = [];
+  String? userId;
 
   Future getTechnicianServices() async {
     http.Response response;
@@ -27,6 +30,20 @@ class _TechnicianServicesState extends State<TechnicianServices> {
         technicianServices = json.decode(response.body);
         listOfTechnicianServices = technicianServices['technicians'];
       });
+    }
+  }
+
+  Future orderService(String id) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    userId = preferences.getString("id");
+    Map data = {"user_id": userId};
+    var body = json.encode(data);
+    var url = Uri.parse('${baseUrl}flutter/services/store/$id');
+    http.Response response = await http.post(url, headers: headers, body: body);
+    if (response.statusCode == 200) {
+      successSnackBar((context), "Order placed successfully");
+    } else {
+      errorSnackBar((context), "An error occurred while placing the order");
     }
   }
 
@@ -157,7 +174,11 @@ class _TechnicianServicesState extends State<TechnicianServices> {
                                         backgroundColor:
                                             const Color(0xFF363f93),
                                         padding: const EdgeInsets.all(20)),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      orderService(
+                                          listOfTechnicianServices[index]['id']
+                                              .toString());
+                                    },
                                     icon: const Icon(
                                       Icons.arrow_forward,
                                       color: Colors.white,
@@ -172,7 +193,15 @@ class _TechnicianServicesState extends State<TechnicianServices> {
                                         backgroundColor:
                                             const Color(0xFF363f93),
                                         padding: const EdgeInsets.all(20)),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  ServiceDetail(
+                                                      serviceId:  listOfTechnicianServices[index]['id']
+                                              .toString())));
+                                    },
                                     icon: const Icon(
                                       Icons.arrow_forward,
                                       color: Colors.white,
