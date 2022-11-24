@@ -159,7 +159,7 @@ class _FirmServicesState extends State<FirmServices> {
                                       color: Colors.white,
                                       size: 10,
                                     ),
-                                    label: const Text('Book')),
+                                    label: const Text('Order')),
                                 SizedBox(
                                   width: width * 0.1,
                                 ),
@@ -174,7 +174,7 @@ class _FirmServicesState extends State<FirmServices> {
                                       color: Colors.white,
                                       size: 10,
                                     ),
-                                    label: const Text('View more'))
+                                    label: const Text('more..'))
                               ],
                             )
                           ],

@@ -163,7 +163,7 @@ class _TechnicianServicesState extends State<TechnicianServices> {
                                       color: Colors.white,
                                       size: 10,
                                     ),
-                                    label: const Text('Book')),
+                                    label: const Text('Order')),
                                 SizedBox(
                                   width: width * 0.1,
                                 ),
@@ -178,7 +178,7 @@ class _TechnicianServicesState extends State<TechnicianServices> {
                                       color: Colors.white,
                                       size: 10,
                                     ),
-                                    label: const Text('View more'))
+                                    label: const Text('more..'))
                               ],
                             )
                           ],

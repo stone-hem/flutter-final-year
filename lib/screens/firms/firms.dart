@@ -197,7 +197,7 @@ class _FirmState extends State<Firm> {
                                       color: Colors.white,
                                       size: 10,
                                     ),
-                                    label: const Text('View more'))
+                                    label: const Text('more..'))
                               ],
                             )
                           ],

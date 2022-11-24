@@ -18,6 +18,7 @@ class ServiceDetail extends StatefulWidget {
 
 class _ServiceDetailState extends State<ServiceDetail> {
   Map serviceDetail = {};
+  List listServiceDetails = [];
   Map serverRes = {};
   String userId = '';
 
@@ -78,8 +79,7 @@ class _ServiceDetailState extends State<ServiceDetail> {
                 height: 350,
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: NetworkImage(
-                            "$imageUrl${serviceDetail["service"]["picture"]}"),
+                        image: NetworkImage(imageUrl + serviceDetail['service']['picture']),
                         fit: BoxFit.cover)),
               ),
             ),

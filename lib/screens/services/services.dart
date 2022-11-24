@@ -117,7 +117,7 @@ class _ServiceState extends State<Service> {
                         child: Column(
                           children: [
                             Image.network(
-                              imageUrl + listOfServices[index]['picture'],
+                              imageUrl + listOfServices[index]['picture'].toString(),
                               fit: BoxFit.cover,
                               height: height * 0.3,
                               width: width * 0.7,
@@ -211,7 +211,7 @@ class _ServiceState extends State<Service> {
                                       color: Colors.white,
                                       size: 10,
                                     ),
-                                    label: const Text('View more'))
+                                    label: const Text('more..'))
                               ],
                             )
                           ],
