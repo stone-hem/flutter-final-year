@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:finalyear/screens/home.dart';
+import 'package:finalyear/screens/technicians/technician_details.dart';
+import 'package:finalyear/screens/technicians/technician_services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -18,7 +20,7 @@ class Technician extends StatefulWidget {
 }
 
 class _TechnicianState extends State<Technician> {
-   Map technician = {};
+  Map technician = {};
   List listOfTechnicians = [];
 
   Future getTechnicians() async {
@@ -39,45 +41,46 @@ class _TechnicianState extends State<Technician> {
     getTechnicians();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
 
-     return Scaffold(
+    return Scaffold(
       body: technician == null
-          ? Text("data loading..")
+          ? const Text("data loading..")
           : SingleChildScrollView(
               padding: EdgeInsets.only(left: width * 0.1, right: width * 0.1),
               child: Column(
                 children: [
-                   SizedBox(
+                  SizedBox(
                     height: height * 0.05,
                   ),
                   Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(),
-                      icon: const Icon(
-                        Icons.arrow_back_ios,
-                        color: Color(0xFF363f93),
-                      ),
-                      onPressed: () {
-                         Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) => const Home()));
-                      },
-                    )
-                  ],
-                ),
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(),
+                        icon: const Icon(
+                          Icons.arrow_back_ios,
+                          color: Color(0xFF363f93),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      const Home()));
+                        },
+                      )
+                    ],
+                  ),
                   const Text(
                     "Technicians Available!",
                     style: TextStyle(fontSize: 26, color: Color(0xFF363f93)),
                   ),
-                 
                   SizedBox(
                     height: height * 0.05,
                   ),
@@ -113,8 +116,7 @@ class _TechnicianState extends State<Technician> {
                                   width: width * 0.01,
                                 ),
                                 Text(
-                                  listOfTechnicians[index]['name']
-                                      .toString(),
+                                  listOfTechnicians[index]['name'].toString(),
                                   style: GoogleFonts.lato(
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -131,22 +133,25 @@ class _TechnicianState extends State<Technician> {
                                   width: width * 0.01,
                                 ),
                                 Text(
-                                  listOfTechnicians[index]['phone_number'].toString(),
+                                  listOfTechnicians[index]['phone_number']
+                                      .toString(),
                                 ),
                               ],
                             ),
                             Column(
                               children: [
-                                 Text(
+                                Text(
                                   "Description:",
                                   style: GoogleFonts.lato(
                                       fontWeight: FontWeight.bold),
                                 ),
-                                 Text(listOfTechnicians[index]['description']
-                                .toString()),
+                                Text(listOfTechnicians[index]['description']
+                                    .toString()),
                               ],
                             ),
-                           SizedBox(height: height*0.01,),
+                            SizedBox(
+                              height: height * 0.01,
+                            ),
                             Row(
                               children: [
                                 ElevatedButton.icon(
@@ -154,13 +159,23 @@ class _TechnicianState extends State<Technician> {
                                         backgroundColor:
                                             const Color(0xFF363f93),
                                         padding: const EdgeInsets.all(20)),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  TechnicianServices(
+                                                      technicianId:
+                                                          listOfTechnicians[
+                                                                  index]['id']
+                                                              .toString())));
+                                    },
                                     icon: const Icon(
                                       Icons.arrow_forward,
                                       color: Colors.white,
                                       size: 10,
                                     ),
-                                    label: const Text('Order')),
+                                    label: const Text('Services')),
                                 SizedBox(
                                   width: width * 0.1,
                                 ),
@@ -169,7 +184,17 @@ class _TechnicianState extends State<Technician> {
                                         backgroundColor:
                                             const Color(0xFF363f93),
                                         padding: const EdgeInsets.all(20)),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  TechnicianDetail(
+                                                      technicianId:
+                                                           listOfTechnicians[
+                                                                  index]['id']
+                                                              .toString())));
+                                    },
                                     icon: const Icon(
                                       Icons.arrow_forward,
                                       color: Colors.white,
@@ -182,8 +207,9 @@ class _TechnicianState extends State<Technician> {
                         ),
                       );
                     },
-                    itemCount:
-                        listOfTechnicians == null ? 0 : listOfTechnicians.length,
+                    itemCount: listOfTechnicians == null
+                        ? 0
+                        : listOfTechnicians.length,
                   )
                 ],
               ),

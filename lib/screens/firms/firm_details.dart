@@ -22,7 +22,6 @@ class _FirmDetailState extends State<FirmDetail> {
     response =
         await http.get(Uri.parse("${baseUrl}flutter/firms/${widget.firmId}"));
     if (response.statusCode == 200) {
-      // print(response.body);
       setState(() {
         firmDetails = json.decode(response.body);
       });
@@ -39,7 +38,9 @@ class _FirmDetailState extends State<FirmDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body:firmDetails['firm'] == null
+          ? const Center(child: Text("data loading.."))
+          :  SizedBox(
         width: double.maxFinite,
         height: double.maxFinite,
         child: Stack(

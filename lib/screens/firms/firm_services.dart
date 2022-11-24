@@ -152,7 +152,7 @@ class _FirmServicesState extends State<FirmServices> {
                                     style: ElevatedButton.styleFrom(
                                         backgroundColor:
                                             const Color(0xFF363f93),
-                                        padding: const EdgeInsets.all(20)),
+                                        padding: const EdgeInsets.all(17)),
                                     onPressed: () {},
                                     icon: const Icon(
                                       Icons.arrow_forward,
@@ -167,7 +167,7 @@ class _FirmServicesState extends State<FirmServices> {
                                     style: ElevatedButton.styleFrom(
                                         backgroundColor:
                                             const Color(0xFF363f93),
-                                        padding: const EdgeInsets.all(20)),
+                                        padding: const EdgeInsets.all(17)),
                                     onPressed: () {},
                                     icon: const Icon(
                                       Icons.arrow_forward,

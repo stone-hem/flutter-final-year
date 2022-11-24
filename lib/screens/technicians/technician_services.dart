@@ -43,7 +43,7 @@ class _TechnicianServicesState extends State<TechnicianServices> {
     final double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: technicianServices == null
-          ? Text("data loading..")
+          ? const Text("data loading..")
           : SingleChildScrollView(
               padding: EdgeInsets.only(left: width * 0.1, right: width * 0.1),
               child: Column(

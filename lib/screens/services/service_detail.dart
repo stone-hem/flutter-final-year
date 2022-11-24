@@ -27,9 +27,9 @@ class _ServiceDetailState extends State<ServiceDetail> {
     response = await http.get(
         Uri.parse("${baseUrl}flutter/services/create/${widget.serviceId}"));
     if (response.statusCode == 200) {
-      // print(response.body);
       setState(() {
         serviceDetail = json.decode(response.body);
+       
       });
     }
   }
@@ -66,7 +66,9 @@ class _ServiceDetailState extends State<ServiceDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body:serviceDetail['service'] == null
+          ? const Center(child: Text("data loading.."))
+          : SizedBox(
         width: double.maxFinite,
         height: double.maxFinite,
         child: Stack(
@@ -79,7 +81,8 @@ class _ServiceDetailState extends State<ServiceDetail> {
                 height: 350,
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: NetworkImage(imageUrl + serviceDetail['service']['picture']),
+                        image: NetworkImage(
+                            imageUrl + serviceDetail['service']['picture']),
                         fit: BoxFit.cover)),
               ),
             ),
