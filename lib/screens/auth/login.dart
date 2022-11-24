@@ -22,12 +22,13 @@ class _LoginState extends State<Login> {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   _login() async {
+
     if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
       http.Response response = await AuthServices.login(
           emailController.text, passwordController.text);
       Map responseMap = jsonDecode(response.body);
       if (response.statusCode == 200) {
-        print(responseMap.values.first);
+        // print(responseMap.values.first);
         SharedPreferences preferences = await SharedPreferences.getInstance();
         await preferences.setString("token", responseMap["token"].toString());
         await preferences.setString(
@@ -36,9 +37,9 @@ class _LoginState extends State<Login> {
             "email", responseMap["user"]["email"].toString());
         await preferences.setString("id", responseMap["user"]["id"].toString());
         Navigator.push(
-            context,
+            (context),
             MaterialPageRoute(
-              builder: (BuildContext context) => Home(),
+              builder: (BuildContext context) => const Home(),
             ));
       } else {
         errorSnackBar(context, "${responseMap.values.first}");

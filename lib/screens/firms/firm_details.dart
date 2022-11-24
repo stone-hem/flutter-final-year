@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class FirmDetail extends StatefulWidget {
-  String firmId;
-  FirmDetail({super.key, required this.firmId});
+  final String firmId;
+  const FirmDetail({super.key,  required this.firmId});
 
   @override
   State<FirmDetail> createState() => _FirmDetailState();

@@ -38,12 +38,12 @@ class _ServiceState extends State<Service> {
     userId = preferences.getString("id")!;
     Map data = {"user_id": userId};
     var body = json.encode(data);
-    var url = Uri.parse(baseUrl + 'flutter/services/store/${id}');
+    var url = Uri.parse(baseUrl + 'flutter/services/store/$id');
     http.Response response = await http.post(url, headers: headers, body: body);
     if (response.statusCode == 200) {
-      successSnackBar(context, "Order placed successfully");
+      successSnackBar((context), "Order placed successfully");
     } else {
-      errorSnackBar(context, "An error occurred while placing the order");
+      errorSnackBar((context), "An error occurred while placing the order");
     }
   }
 

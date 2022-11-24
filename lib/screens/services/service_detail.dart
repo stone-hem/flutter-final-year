@@ -9,8 +9,8 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ServiceDetail extends StatefulWidget {
-  String serviceId;
-  ServiceDetail({super.key, required this.serviceId});
+  final String serviceId;
+  const ServiceDetail({super.key, required this.serviceId});
 
   @override
   State<ServiceDetail> createState() => _ServiceDetailState();
@@ -49,9 +49,9 @@ class _ServiceDetailState extends State<ServiceDetail> {
     );
 
     if (response.statusCode == 200) {
-      successSnackBar(context, "Order placed successfully");
+      successSnackBar((context), "Order placed successfully");
     } else {
-      errorSnackBar(context, "${response.statusCode}");
+      errorSnackBar((context), "${response.statusCode}");
     }
   }
 

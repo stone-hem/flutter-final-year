@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class TechnicianDetail extends StatefulWidget {
-  String technicianId;
-  TechnicianDetail({super.key, required this.technicianId});
+  final String technicianId;
+  const TechnicianDetail({super.key, required this.technicianId});
 
   @override
   State<TechnicianDetail> createState() => _TechnicianDetailState();

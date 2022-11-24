@@ -7,8 +7,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
 class TechnicianServices extends StatefulWidget {
-  String technicianId = '';
-  TechnicianServices({super.key, required this.technicianId});
+  final String technicianId;
+  const TechnicianServices({super.key, required this.technicianId});
 
   @override
   State<TechnicianServices> createState() => _TechnicianServicesState();

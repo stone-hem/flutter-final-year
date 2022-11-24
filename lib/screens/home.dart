@@ -1,3 +1,4 @@
+import 'package:finalyear/screens/auth/login.dart';
 import 'package:finalyear/screens/firms/firms.dart';
 import 'package:finalyear/screens/services/my_sevices.dart';
 import 'package:finalyear/screens/services/services.dart';
@@ -58,11 +59,26 @@ class _HomeState extends State<Home> {
                       Icons.menu_open_sharp,
                       color: Color(0xFF363f93),
                     )),
-                CircleAvatar(
-                  radius: 20,
-                  backgroundColor: Color.fromARGB(255, 214, 190, 118),
-                  backgroundImage: AssetImage('images/sngmechanic.png'),
-                )
+                Row(
+                  children: [
+                    const CircleAvatar(
+                      radius: 20,
+                      backgroundColor: Color.fromARGB(255, 214, 190, 118),
+                      backgroundImage: AssetImage('images/sngmechanic.png'),
+                    ),
+                    IconButton(
+                        onPressed: () async {
+                          SharedPreferences pref =
+                              await SharedPreferences.getInstance();
+                          pref.clear();
+                          Navigator.push(
+                              (context),
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) => const Login()));
+                        },
+                        icon: const Icon(Icons.power))
+                  ],
+                ),
               ],
             ),
           ),
