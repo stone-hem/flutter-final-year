@@ -1,5 +1,6 @@
 import 'package:finalyear/screens/auth/login.dart';
 import 'package:finalyear/screens/firms/firms.dart';
+import 'package:finalyear/screens/instant/instant.dart';
 import 'package:finalyear/screens/services/my_sevices.dart';
 import 'package:finalyear/screens/services/services.dart';
 import 'package:finalyear/screens/size_constants.dart';
@@ -74,7 +75,8 @@ class _HomeState extends State<Home> {
                           Navigator.push(
                               (context),
                               MaterialPageRoute(
-                                  builder: (BuildContext context) => const Login()));
+                                  builder: (BuildContext context) =>
+                                      const Login()));
                         },
                         icon: const Icon(Icons.power))
                   ],
@@ -223,19 +225,25 @@ class _HomeState extends State<Home> {
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Color.fromARGB(255, 243, 190, 252),
                             padding: const EdgeInsets.all(20)),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      const InstantOrder()));
+                        },
                         icon: const Icon(
                           Icons.arrow_forward,
                           color: Colors.white,
                           size: 0,
                         ),
                         label: const Text(
-                          'Pending Services',
+                          'Instant Order',
                           style: TextStyle(fontSize: 10, color: Colors.black),
                         )),
                   ),
                   Container(
-                    margin: EdgeInsets.only(left: 15),
+                    margin: const EdgeInsets.only(left: 15),
                     width: 100,
                     child: ElevatedButton.icon(
                         style: ElevatedButton.styleFrom(

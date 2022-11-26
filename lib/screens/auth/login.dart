@@ -42,7 +42,7 @@ class _LoginState extends State<Login> {
               builder: (BuildContext context) => const Home(),
             ));
       } else {
-        errorSnackBar(context, "${responseMap.values.first}");
+        errorSnackBar((context), "${responseMap.values.first}");
       }
     } else {
       errorSnackBar(context, 'enter all required fields');
@@ -87,7 +87,7 @@ class _LoginState extends State<Login> {
                 height: height * 0.1,
               ),
               const Text(
-                "Here to get continue",
+                "Here to continue",
                 style: TextStyle(fontSize: 26, color: Color(0xFF363f93)),
               ),
               const Text(
@@ -140,7 +140,7 @@ class _LoginState extends State<Login> {
                   ),
                   ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFF363f93),
+                          backgroundColor: const Color(0xFF363f93),
                           shape: CircleBorder(),
                           padding: EdgeInsets.all(20)),
                       onPressed: () {
