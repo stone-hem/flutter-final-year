@@ -4,10 +4,8 @@ import 'package:finalyear/api/globals.dart';
 import 'package:finalyear/screens/home.dart';
 import 'package:finalyear/screens/styles.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 
 class MyService extends StatefulWidget {
   const MyService({super.key});
@@ -25,16 +23,26 @@ class _MyServiceState extends State<MyService> {
     userId = preferences.getString("id")!;
     http.Response response;
     response =
-        await http.get(Uri.parse(baseUrl + "flutter/services/view/${userId}"));
+        await http.get(Uri.parse("${baseUrl}flutter/services/view/$userId"));
     setState(() {
       services = json.decode(response.body);
       listServices = services['cart'];
     });
   }
 
+  Future cancel(String id) async {
+    http.Response response;
+    response =
+        await http.get(Uri.parse("${baseUrl}flutter/services/cancel/$id"));
+    if (response.statusCode == 200) {
+      successSnackBar((context), "Order Cancelled successfully");
+    } else {
+      errorSnackBar((context), "${response.statusCode}");
+    }
+  }
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     myServices();
   }
@@ -77,7 +85,7 @@ class _MyServiceState extends State<MyService> {
                     height: height * 0.1,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 160, 167, 228),
+                        color: Color.fromARGB(255, 247, 186, 246),
                         borderRadius: BorderRadius.circular(20)),
                     child: Stack(
                       children: [
@@ -162,7 +170,10 @@ class _MyServiceState extends State<MyService> {
                                           style: ElevatedButton.styleFrom(
                                               backgroundColor:
                                                   Colors.redAccent),
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            cancel(listServices[index]['id']
+                                                .toString());
+                                          },
                                           icon: const Icon(
                                             Icons.warning,
                                             color: Colors.white,
