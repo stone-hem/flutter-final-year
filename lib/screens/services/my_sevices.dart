@@ -2,10 +2,12 @@ import 'dart:convert';
 
 import 'package:finalyear/api/globals.dart';
 import 'package:finalyear/screens/home.dart';
+import 'package:finalyear/screens/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class MyService extends StatefulWidget {
   const MyService({super.key});
@@ -71,135 +73,113 @@ class _MyServiceState extends State<MyService> {
                       )
                     ],
                   ),
-                  const Text(
-                    "My services",
-                    style: TextStyle(fontSize: 22, color: Color(0xFF363f93)),
+                  Container(
+                    height: height * 0.1,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 160, 167, 228),
+                        borderRadius: BorderRadius.circular(20)),
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          top: height * 0.02,
+                          left: width * 0.01,
+                          child: const Text("My services",
+                              style:
+                                  TextStyle(fontSize: 20, color: Colors.black)),
+                        ),
+                        Positioned(
+                            top: height * 0.025,
+                            left: width * 0.6,
+                            child: const Icon(
+                              Icons.room_service,
+                              color: Colors.black,
+                              size: 20,
+                            ))
+                      ],
+                    ),
                   ),
                   SizedBox(
                     height: height * 0.02,
                   ),
-                  ListView.builder(
-                    shrinkWrap: true,
+                  GridView.builder(
                     physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 8,
+                      mainAxisSpacing: 8,
+                      mainAxisExtent: 250,
+                    ),
+                    shrinkWrap: true,
+                    itemBuilder: (_, index) {
                       return Container(
-                        padding: EdgeInsets.only(
-                            left: width * 0.009, right: width * 0.009),
-                        margin: EdgeInsets.symmetric(vertical: width * 0.01),
-                        width: double.maxFinite,
-                        height: height * 0.3,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                        ),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: Colors.black12),
                         child: Column(
                           children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // Image.network(
-                                //   imageUrl + listServices[index]['picture'],
-                                //   fit: BoxFit.cover,
-                                //   height: height * 0.1,
-                                //   width: width * 0.3,
-                                // ),
-                                Container(
-                                  width: width * 0.3,
-                                  height: height * 0.1,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(150),
-                                      image: DecorationImage(
-                                          image: NetworkImage(imageUrl +
-                                              listServices[index]['picture']),
-                                          fit: BoxFit.cover)),
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Contact:",
-                                          style: GoogleFonts.lato(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        SizedBox(
-                                          width: width * 0.01,
-                                        ),
-                                        Text(
-                                          listServices[index]['phone_number']
-                                              .toString(),
-                                          style: GoogleFonts.lato(),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      width: width * 0.45,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "Service: ${listServices[index]['name']}",
-                                            style: GoogleFonts.lato(
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
+                            ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(8),
+                                  topRight: Radius.circular(8)),
+                              child: Image.network(
+                                imageUrl + listServices[index]['picture'],
+                                fit: BoxFit.cover,
+                                height: 150,
+                                width: double.infinity,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(6.0),
+                              child: Column(
+                                children: [
+                                  Text("Service",
+                                      style: sourceFontBold.copyWith(
+                                          fontSize: 15,
+                                          color: Color(0xFF363f93))),
+                                  Text(
+                                    "${listServices[index]['name']}",
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const Text("Amount"),
+                                      Text(
+                                        "Ksh. ${listServices[index]['value']}",
+                                        style: sourceFontSemiBold,
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Text(
-                                  "Description",
-                                  style: GoogleFonts.lato(
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(listServices[index]['description']
-                                    .toString()),
-                              ],
-                            ),
-                            SizedBox(
-                              height: height * 0.01,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                ElevatedButton.icon(
-                                    style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.redAccent,
-                                        padding: const EdgeInsets.all(10)),
-                                    onPressed: () {},
-                                    icon: const Icon(
-                                      Icons.warning,
-                                      color: Colors.white,
-                                      size: 8,
-                                    ),
-                                    label: const Text('Cancel..')),
-                                ElevatedButton.icon(
-                                    style: ElevatedButton.styleFrom(
-                                        backgroundColor:
-                                            const Color(0xFF363f93),
-                                        padding: const EdgeInsets.all(10)),
-                                    onPressed: () {},
-                                    icon: const Icon(
-                                      Icons.arrow_forward,
-                                      color: Colors.white,
-                                      size: 8,
-                                    ),
-                                    label: const Text('more..'))
-                              ],
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: height * 0.005,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      ElevatedButton.icon(
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor:
+                                                  Colors.redAccent),
+                                          onPressed: () {},
+                                          icon: const Icon(
+                                            Icons.warning,
+                                            color: Colors.white,
+                                            size: 8,
+                                          ),
+                                          label: const Text('Cancel'))
+                                    ],
+                                  ),
+                                ],
+                              ),
                             )
                           ],
                         ),
                       );
                     },
                     itemCount: listServices == null ? 0 : listServices.length,
-                  )
+                  ),
                 ],
               ),
             ),
